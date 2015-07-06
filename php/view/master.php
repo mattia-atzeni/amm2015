@@ -38,7 +38,9 @@ include_once 'ViewDescriptor.php';
             ?>
             <?php
             $content = $vd->getContent();
-            require "$content";
+            if (isset($content)) {
+                require "$content";
+            }
             ?>
         </div>
         <footer>

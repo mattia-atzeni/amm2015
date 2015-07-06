@@ -69,6 +69,7 @@ class UserFactory {
 
     private function buildUser($row) {
         $user = new User();
+        $user->setId($row["id"]);
         $user->setFirstName($row['first_name']);
         $user->setLastName($row['last_name']);
         $user->setEmail($row['email']);

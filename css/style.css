@@ -1,124 +1,128 @@
 * {
-	box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-	font-family: "Helvetica Neue", Helvetica, sans-serif;
-	padding: 0;
-	margin: 0;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 /* Barra di Navigazione */
 
 nav ul {
-	text-align: right;
-	list-style-type: none;
-	background: #494949;
-	min-width: 640px;
-	margin: 0;
-	padding: 0;
-	border-bottom: 1px solid #616161;
-	border-top: 1px solid #616161;
+    text-align: right;
+    list-style-type: none;
+    background: #494949;
+    min-width: 640px;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #616161;
+    border-top: 1px solid #616161;
 }
 
 nav li {
-	display: inline;
+    display: inline;
+}
+
+.logo {
+    display: inline-block;
 }
 
 nav ul img {
-	position: absolute;
-	left: 120px;
-	top: 13px;
-	margin: 0;
-	height: 15px;
-	width: auto;
-	padding: 0;
+    position: absolute;
+    left: 120px;
+    top: 13px;
+    margin: 0;
+    height: 15px;
+    width: auto;
+    padding: 0;
 }
 
 .navbar-item {
-	display: inline-block;
-	padding: 10px 30px 10px 30px;
-	text-decoration: none;
-	color: white;
-	position: relative;
-	right: 64px;
+    display: inline-block;
+    padding: 10px 30px 10px 30px;
+    text-decoration: none;
+    color: white;
+    position: relative;
+    right: 64px;
 }
 
 nav li a:hover {
-	color: #e0e0e0;
+    color: #e0e0e0;
 }
 
 #logo {
-	position: relative;
-	top: 20px;
-	left: 20px;
+    position: relative;
+    top: 20px;
+    left: 20px;
 }
 
 /* Login Form */
 .submit-container {
-	text-align: right;
+    text-align: right;
 }
 
 #login-form {
-	float: right;
-	background: linear-gradient(#f0f8ff, #b3bec2);
-	background: -webkit-linear-gradient(#f0f8ff, #b3bec2);
-	border-radius: 1em;
-	border: 1px solid #d1e0f0;
-	box-shadow: 0px 1px 5px;
-	padding: 1em;
-	margin: 1em;
-	width: 330px;
+    float: right;
+    background: linear-gradient(#f0f8ff, #b3bec2);
+    background: -webkit-linear-gradient(#f0f8ff, #b3bec2);
+    border-radius: 1em;
+    border: 1px solid #d1e0f0;
+    box-shadow: 0px 1px 5px;
+    padding: 1em;
+    margin: 1em;
+    width: 330px;
 }
 
 .textbox {
-	border-radius: 0.5em;
-	border: 1px solid #30aec2;
-	padding: 0.5em;
-	margin-top:0.5em;
-	margin-bottom: 1em;
-	height: 2.8em;
-	width: 100%;
+    border-radius: 0.5em;
+    border: 1px solid #30aec2;
+    padding: 0.5em;
+    margin-top:0.5em;
+    margin-bottom: 1em;
+    height: 2.8em;
+    width: 100%;
 }
 
 .textbox:focus {
-	box-shadow: 0px 0px 12px rgba(131, 255, 237, 0.7);
+    box-shadow: 0px 0px 12px rgba(131, 255, 237, 0.7);
 }
 
 #login-form label, #login-form h2 {
-	color: #214454;
-	font-weight: bold;
-	text-shadow: 0px 0px 1px white;
+    color: #214454;
+    font-weight: bold;
+    text-shadow: 0px 0px 1px white;
 }
 
 button[type="submit"] {
-	background: linear-gradient(#52b1FF, #2276E3);
-	background: -webkit-linear-gradient(#52a1FF, #2276E3);
-	border-radius: 13px;
-	border: 1px solid #3087b2;
-	padding: 0.5em 1em 0.5em 1em;
-	color: white;
+    background: linear-gradient(#52b1FF, #2276E3);
+    background: -webkit-linear-gradient(#52a1FF, #2276E3);
+    border-radius: 13px;
+    border: 1px solid #3087b2;
+    padding: 0.5em 1em 0.5em 1em;
+    color: white;
 }
 
 button[type="submit"]:hover {
-	background: linear-gradient(#72c1FF, #2296ff);
-	background: -webkit-linear-gradient(#72c1FF, #2296ff);
-	box-shadow: 0px 0px 2px rgba(131, 255, 237, 0.52);
-	color: white;
+    background: linear-gradient(#72c1FF, #2296ff);
+    background: -webkit-linear-gradient(#72c1FF, #2296ff);
+    box-shadow: 0px 0px 2px rgba(131, 255, 237, 0.52);
+    color: white;
 }
 
 button[type="submit"]:active {
-	background: linear-gradient(#2296ff, #72c1FF);
-	background: -webkit-linear-gradient(#2296ff, #72c1FF);
+    background: linear-gradient(#2296ff, #72c1FF);
+    background: -webkit-linear-gradient(#2296ff, #72c1FF);
 }
 
 footer {
-	position: absolute;
-	bottom: 10px;
-	left: 10px;
-	width: 100%;
-	padding: 1em;
-	color: #454545;
-	border: 1px solid #454545;
-	border-radius: 1em;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 100%;
+    padding: 1em;
+    color: #454545;
+    border: 1px solid #454545;
+    border-radius: 1em;
 }

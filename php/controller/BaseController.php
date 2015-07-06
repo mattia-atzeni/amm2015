@@ -19,19 +19,21 @@ class BaseController {
                     $username = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
                     $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : '';
                     $this->login($vd, $username, $password);
-                if ($this->loggedIn()) {
-                    $this->showLoginPage($vd);
-                    echo "<p>loggedIn</p>";
-                }
-                //$user = UserFactory::instance()->cercaUtentePerId($_SESSION[self::user], $_SESSION[self::role]);
+                    if ($this->loggedIn()) {
+                        $this->showHome($vd);
+                        //$user = UserFactory::instance()->cercaUtentePerId($_SESSION[self::user], $_SESSION[self::role]);
+                    } else {
+                        $this->showLoginPage($vd);
+                    }
+                    break;
+                case 'logout':
+                    $this->logout($vd);
                 default : $this->showLoginPage($vd);
             }
         } else {
             if ($this->loggedIn()) {
             //$user = UserFactory::instance()->cercaUtentePerId($_SESSION[self::user], $_SESSION[self::role]);
-            //$this->showHomeUtente($vd);
-                $this->showLoginPage($vd);
-                echo "<p>loggedIn</p>";
+                $this->showHome($vd);
             } else {
             $this->showLoginPage($vd);
             }
@@ -50,7 +52,7 @@ class BaseController {
         }
     }
     
-    protected function logout($vd) {
+    protected function logout() {
         // reset array $_SESSION
         $_SESSION = array();
         // termino la validita' del cookie di sessione
@@ -60,7 +62,6 @@ class BaseController {
         }
         // distruggo il file di sessione
         session_destroy();
-        $this->showLoginPage($vd);
     }
 
     protected function loggedIn() {
@@ -71,6 +72,10 @@ class BaseController {
         $vd->setTitle("login");
         $vd->setNavigationBar("./php/view/login/navigationBar.php");
         $vd->setContent("./php/view/login/content.php");
+    }
+    
+    private function showHome($vd) {
+        $vd->setContent("./php/view/user/content.php"); 
     }
 
 }

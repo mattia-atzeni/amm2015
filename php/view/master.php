@@ -12,11 +12,11 @@ include_once 'ViewDescriptor.php';
     <body>
         <nav>
             <ul>
-                <li><a href=""><img src="images/mooc.png" alt="mooc"></a></li>
+                <li><a href="" class="logo"><img src="images/mooc.png" alt="mooc"></a></li>
                 <?php
                 if ($vd->getNavigationBar() != null) {
                     $bar = $vd->getNavigationBar();
-                    require "$bar";  
+                    require "$bar";
                 }
                 ?>
             </ul>

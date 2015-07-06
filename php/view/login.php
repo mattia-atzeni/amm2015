@@ -14,13 +14,13 @@
             </ul>
         </nav>
         <br/>
-        <form id="login-form">
+        <form id="login-form" action="login">
             <h2>Login</h2>
             <label for="email">Email</label><br/>
-            <input id="email" type="email" placeholder="Your Email" class="textbox">
+            <input name="username" id="email" type="text" placeholder="Your Email" class="textbox">
             <br/>
             <label for="password">Password</label><br/>
-            <input id="password" type="password" placeholder="Your Password" class="textbox">
+            <input name="password" id="password" type="password" placeholder="Your Password" class="textbox">
             <br/>
             <div class="submit-container">
                 <button type="submit">Login</button>

@@ -42,19 +42,32 @@ class User {
     }
     
     public function setId($id) {
-        $this->id = $id;
+        $intVal = filter_var($id, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+        if (!isset($intVal)) {
+            return false;
+        }
+        $this->id = $intVal;
+        return true;
     }
 
     public function setFirstName($firstName) {
         $this->firstName = $firstName;
+        return true;
     }
 
     public function setLastName($lastName) {
         $this->lastName = $lastName;
+        return true;
     }
 
     public function setEmail($email) {
-        $this->email = $email;
+        $valid = filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_NULL_ON_FAILURE);
+        if (isset($valid)) {
+            $this->email = $valid;
+            return true;
+        }
+        return false;
+           
     }
 
     public function setUsername($username) {
@@ -67,6 +80,7 @@ class User {
 
     public function setPassword($password) {
         $this->password = $password;
+        return true;
     }
     
     public function setRole($role) {
@@ -78,6 +92,4 @@ class User {
             default: return false;
         }
     }
-
-
 }

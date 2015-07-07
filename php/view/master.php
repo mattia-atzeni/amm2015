@@ -6,6 +6,7 @@ include_once 'ViewDescriptor.php';
     <head>
         <title><?php $vd->getTitle() ?></title>
         <meta charset="utf-8"/>
+        <base href="<?= Settings::getApplicationPath() ?>"/>
         <link rel="stylesheet"  type="text/css"  href="css/style.css">
     </head>
 

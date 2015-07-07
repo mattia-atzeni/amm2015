@@ -1,6 +1,8 @@
 <?php
 
 include_once 'php/controller/BaseController.php';
+include_once 'php/controller/ProviderController.php';
+
 
 FrontController::dispatch();
 

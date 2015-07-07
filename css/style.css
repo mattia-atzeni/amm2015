@@ -37,9 +37,7 @@ nav ul img {
 
 .navbar-item {
     display: inline-block;
-    padding: 5px 30px 5px 30px;
-    border-bottom: 5px solid rgba(0, 0, 0, 0);
-    border-top: 5px solid rgba(0, 0, 0, 0);
+    padding: 10px 30px 10px 30px;
     text-decoration: none;
     color: white;
     position: relative;
@@ -48,7 +46,6 @@ nav ul img {
 
 nav li a:hover {
     color: #e0e0e0;
-    border-bottom: 5px solid #e0e0e0;
 }
 
 .logo {

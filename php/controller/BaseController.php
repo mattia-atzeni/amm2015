@@ -54,7 +54,7 @@ class BaseController {
         return isset($_SESSION) && array_key_exists(self::user, $_SESSION);
     }
     
-    private function showHomePage($vd) {
+    protected function showHomePage($vd) {
         if (!$this->loggedIn()) {
             $path = "php/view/login/";
         } else {

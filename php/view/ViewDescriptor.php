@@ -36,7 +36,5 @@ class ViewDescriptor {
 
     public function setContent($content) {
         $this->content = $content;
-    }
-
- 
+    } 
 }

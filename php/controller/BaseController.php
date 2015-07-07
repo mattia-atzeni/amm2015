@@ -1,7 +1,7 @@
 <?php
 
-include_once './php/model/UserFactory.php';
-include_once './php/view/ViewDescriptor.php';
+include_once 'php/model/UserFactory.php';
+include_once 'php/view/ViewDescriptor.php';
 
 class BaseController {
 
@@ -18,36 +18,24 @@ class BaseController {
                 case 'login':
                     $username = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
                     $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : '';
-                    $this->login($vd, $username, $password);
-                    if ($this->loggedIn()) {
-                        $this->showHome($vd);
-                        //$user = UserFactory::instance()->cercaUtentePerId($_SESSION[self::user], $_SESSION[self::role]);
-                    } else {
-                        $this->showLoginPage($vd);
+                    if (! $this->login($username, $password) ) {
+                        $vd->setErrorMessage("Utente sconosciuto o password errata");
                     }
                     break;
-                default : $this->showLoginPage($vd);
-            }
-        } else {
-            if ($this->loggedIn()) {
-            //$user = UserFactory::instance()->cercaUtentePerId($_SESSION[self::user], $_SESSION[self::role]);
-                $this->showHome($vd);
-            } else {
-            $this->showLoginPage($vd);
+                case "logout":
+                    $this->logout();
             }
         }
-
-        require "php/view/master.php";
+        $this->showHomePage($vd);
     }
 
-    protected function login($vd, $username, $password) {
+    protected function login($username, $password) {
         $user = UserFactory::login($username, $password);
         if (isset($user)) {
             $_SESSION[self::user] = $user->getId();
-            $vd->setErrorMessage("OK");
-        } else {
-            $vd->setErrorMessage("Utente sconosciuto o password errata");
+            return true;
         }
+        return false; 
     }
     
     protected function logout() {
@@ -65,16 +53,18 @@ class BaseController {
     protected function loggedIn() {
         return isset($_SESSION) && array_key_exists(self::user, $_SESSION);
     }
-
-    private function showLoginPage($vd) {
-        $vd->setTitle("login");
-        $vd->setNavigationBar("./php/view/login/navigationBar.php");
-        $vd->setContent("./php/view/login/content.php");
-    }
     
-    private function showHome($vd) {
-        $vd->setContent("./php/view/user/content.php");
-        $vd->setNavigationBar("./php/view/login/navigationBar.php");
+    private function showHomePage($vd) {
+        if (!$this->loggedIn()) {
+            $path = "php/view/login/";
+        } else {
+            $path = "php/view/provider/";
+        }
+        
+        $vd->setContent($path . "content.php");
+        $vd->setNavigationBar($path . "navigationBar.php");
+        
+        require "php/view/master.php";
     }
 
 }

@@ -6,6 +6,7 @@ FrontController::dispatch();
 
 class FrontController {
     public static function dispatch() {
+        //echo "session_start";
         session_start();
         if (isset($_REQUEST["page"])) {
             switch ($_REQUEST["page"]) {
@@ -30,16 +31,15 @@ class FrontController {
     public static function write404() {      
         header('HTTP/1.0 404 Not Found');
         $title = "File non trovato";
-        $message = "La pagina che richiesta non &egrave; disponibile";
-        include_once('error.php');
+        $message = "La pagina richiesta non &egrave; disponibile";
+        require 'php/error.php';
         exit();
     }
     
     public static function write403() {
         header('HTTP/1.0 403 Forbidden');
         $title = "Accesso negato";
-        $login = true;
-        include_once('error.php');
+        require 'php/error.php';
         exit();
     }
 }

@@ -10,7 +10,7 @@
             <?=
             $message
             ?>
-            <br/>
+            <br/><br/>
             <a href="login">Login</a>
         </p>
         

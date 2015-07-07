@@ -1,12 +1,17 @@
 <?php
 
 class User {
+    
+    const Learner = 'learner';
+    const Provider = 'provider';
+    
     private $id;
     private $firstName;
     private $lastName;
     private $email;
     private $username;
     private $password;
+    private $role;
    
     public function getId() {
         return $this->id;
@@ -30,6 +35,10 @@ class User {
 
     public function getPassword() {
         return $this->password;
+    }
+    
+    public function getRole() {
+        return $this->role;
     }
     
     public function setId($id) {
@@ -58,6 +67,16 @@ class User {
 
     public function setPassword($password) {
         $this->password = $password;
+    }
+    
+    public function setRole($role) {
+        switch($role) {
+            case self::Learner:
+            case self::Provider:
+                $this->role = $role;
+                return true;
+            default: return false;
+        }
     }
 
 

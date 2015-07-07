@@ -16,7 +16,7 @@ class UserFactory {
             return null;
         }
 
-        $query = "select id, username, password, first_name, last_name, email from users
+        $query = "select id, username, password, first_name, last_name, email, isProvider from users
                   where username = ? and password = ?";
         
         $stmt = $mysqli->stmt_init();
@@ -51,7 +51,8 @@ class UserFactory {
                 $row['password'], 
                 $row['first_name'], 
                 $row['last_name'],
-                $row['email'] );
+                $row['email'],
+                $row['isProvider'] );
         
         if (!$bind) {
             error_log("[loadUser] impossibile effettuare il binding in output");
@@ -75,6 +76,12 @@ class UserFactory {
         $user->setEmail($row['email']);
         $user->setUsername($row['username']);
         $user->setPassword($row['password']);
+        
+        if ($row['isProvider']) {
+            $user->setRole(User::Provider);
+        } else {
+            $user->setRole(User::Learner);
+        }
         return $user;
     }
     

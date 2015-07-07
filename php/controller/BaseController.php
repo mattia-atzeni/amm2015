@@ -75,7 +75,8 @@ class BaseController {
     }
     
     private function showHome($vd) {
-        $vd->setContent("./php/view/user/content.php"); 
+        $vd->setContent("./php/view/user/content.php");
+        $vd->setNavigationBar("./php/view/login/navigationBar.php");
     }
 
 }

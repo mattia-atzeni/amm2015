@@ -2,6 +2,7 @@
 include_once 'BaseController.php';
 include_once 'php/view/ViewDescriptor.php';
 include_once 'php/model/CourseFactory.php';
+include_once 'php/model/Course.php';
 include_once 'php/model/CategoryFactory.php';
 
 class ProviderController extends BaseController {
@@ -24,7 +25,7 @@ class ProviderController extends BaseController {
         if (isset($cmd)) {
             switch ($cmd) {
                 case "save_course":
-                    
+                    $course = CourseFactory::buildFromArray($_REQUEST);                    
             }
         }
         

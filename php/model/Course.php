@@ -49,10 +49,17 @@ class Course {
     public function setLink($link) {
         $valid = filter_var($link, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
         if (isset($valid)) {
-            $this->link = $valid;
+            $this->link = $link;
             return true;
+        } else {
+            $temp = "http://" . $link;
+            $valid = filter_var($temp, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
+            if (isset($valid)) {
+                $this->link = $link;
+                return true;
+            }
+            return false;
         }
-        return false;
     }
 
     public function setCategory(Category $category) {

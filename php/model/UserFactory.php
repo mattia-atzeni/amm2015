@@ -11,27 +11,18 @@ class UserFactory {
     public static function login($username, $password) {
         $mysqli = Database::connect();
         if (!isset($mysqli)) {
-            error_log("[login] impossibile connettersi al database");
-            $mysqli->close();
             return null;
         }
 
         $query = "select id, username, password, first_name, last_name, email, isProvider from users
                   where username = ? and password = ?";
         
-        $stmt = $mysqli->stmt_init();
-        $stmt->prepare($query);
-        if (!$stmt) {
-            error_log("[login] impossibile inizializzare il prepared statement");
-            $mysqli->close();
+        $stmt = Database::prepareStatement($mysqli, $query);
+        if (!isset($stmt)) {
             return null;
         }
 
-        if (!$stmt->bind_param('ss', $username, $password)) {
-            error_log("[login] impossibile effettuare il binding in input");
-            $mysqli->close();
-            return null;
-        }
+        Database::inputBind($stmt, 'ss', $username, $password);
 
         $user = self::loadUser($stmt);
         $mysqli->close();

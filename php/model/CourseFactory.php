@@ -2,6 +2,7 @@
 
 include_once 'Database.php';
 include_once 'Course.php';
+include_once 'CategoryFactory.php';
 
 class CourseFactory {
     
@@ -9,33 +10,39 @@ class CourseFactory {
         
     }
     
+    public static function buildFromArray(&$array) {
+        if (isset($array)) {
+            $course = new Course();
+            if (isset($array['name']) && isset($array['link']) && isset($array['category'])) {
+                $course->setName($array['name']);
+                $course->setLink($array['link']);
+                
+            }
+        }
+    }
+    
     public static function newCourse(Course $course) {
         $query = "insert into courses (name, link, category_id, owner_id, platform_id)
                   values (?, ?, ?, ?, ?)";
-        $this->toDatabase($course, $query);
+        self::toDatabase($course, $query);
         
     }
     
-    private function toDatabase(Course $course, $query){
+    private static function toDatabase(Course $course, $query){
         $mysqli = Database::connect();
         if (!isset($mysqli)) {
-            error_log("[toDatabase] errore nella connessione al database");
             return 0;
         }
 
-        $stmt = $mysqli->stmt_init();
-       
-        $stmt->prepare($query);
-        if (!$stmt) {
-            error_log("[toDatabase] impossibile inizializzare il prepared statement");
-            $mysqli->close();
+        $stmt = Database::prepareStatement($mysqli, $query);
+        if (!isset($stmt)) {
             return 0;
         }
         
         $bind = $stmt->bind_param('ssiii', 
                 $course->getName(),
                 $course->getLink(),
-                $course->getCategory(),
+                $course->getCategory()->getId(),
                 $course->getOwner(),
                 $course->getPlatform());
         

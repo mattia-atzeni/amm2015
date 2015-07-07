@@ -2,8 +2,7 @@
 
 include_once 'php/controller/BaseController.php';
 include_once 'php/controller/ProviderController.php';
-
-
+    
 FrontController::dispatch();
 
 class FrontController {
@@ -17,6 +16,7 @@ class FrontController {
                     $controller->handleInput();
                     break;
                 case "learner":
+                    // controllare permessi
                     $controller = new LearnerController();
                     $controller->handleInput();
                     break;

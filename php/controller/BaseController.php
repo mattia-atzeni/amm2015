@@ -26,8 +26,6 @@ class BaseController {
                         $this->showLoginPage($vd);
                     }
                     break;
-                case 'logout':
-                    $this->logout($vd);
                 default : $this->showLoginPage($vd);
             }
         } else {
@@ -39,7 +37,7 @@ class BaseController {
             }
         }
 
-        require "./php/view/master.php";
+        require "php/view/master.php";
     }
 
     protected function login($vd, $username, $password) {

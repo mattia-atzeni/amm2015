@@ -11,7 +11,7 @@
             $message
             ?>
             <br/><br/>
-            <a href="login">Login</a>
+            <a href="../login?cmd=logout">Login</a>
         </p>
         
     </body>

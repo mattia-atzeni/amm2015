@@ -10,13 +10,13 @@ class CourseFactory {
         
     }
     
-    public static function buildFromArray(&$array) {
+    public static function getCourseFromArray(&$array) {
         if (isset($array)) {
             $course = new Course();
             if (isset($array['name']) && isset($array['link']) && isset($array['category'])) {
                 $course->setName($array['name']);
                 $course->setLink($array['link']);
-                
+                $course->setCategory(CategoryFactory::getCategoryFromId($array['category']));
             }
         }
     }

@@ -2,7 +2,8 @@
 
 include_once 'php/controller/BaseController.php';
 include_once 'php/controller/ProviderController.php';
-    
+include_once 'php/model/User.php';
+
 FrontController::dispatch();
 
 class FrontController {
@@ -18,10 +19,18 @@ class FrontController {
                 case "learner":
                     // controllare permessi
                     $controller = new LearnerController();
+                    if (isset($_SESSION[BaseController::Role]) &&
+                        $_SESSION[BaseController::Role] != User::Learner) {
+                        self::write403();
+                    }
                     $controller->handleInput();
                     break;
                 case "provider":
                     $controller = new ProviderController();
+                    if (isset($_SESSION[BaseController::Role]) &&
+                        $_SESSION[BaseController::Role] != User::Provider) {
+                        self::write403();
+                    }
                     $controller->handleInput();
                     break;
                 default:
@@ -41,6 +50,7 @@ class FrontController {
     public static function write403() {
         header('HTTP/1.0 403 Forbidden');
         $title = "Accesso negato";
+        $message = "Non disponi dei diritti necessari per visualizzare la pagina";
         require 'php/error.php';
         exit();
     }

@@ -9,57 +9,52 @@ class UserFactory {
     }
     
     public static function login($username, $password) {
-        $mysqli = Database::connect();
-        if (!isset($mysqli)) {
-            return null;
-        }
-
+        $db = new Database();
+        $db->connect();
         $query = "select id, username, password, first_name, last_name, email, isProvider from users
                   where username = ? and password = ?";
-        
-        $stmt = Database::prepareStatement($mysqli, $query);
-        if (!isset($stmt)) {
+ 
+        $db->prepare($query);
+        $db->bind('ss', $username, $password);
+        $row = $db->fetch();
+        $db->close();
+        if (isset($row)) {
+            $user = self::getUserFromArray($row);
+        } else {
             return null;
         }
-
-        Database::inputBind($stmt, 'ss', $username, $password);
-
-        $user = self::loadUser($stmt);
-        $mysqli->close();
         return $user;
     }
     
-    private function loadUser(mysqli_stmt $stmt) {
+    /*private function loadUser(mysqli_stmt $stmt) {
         
         if (!$stmt->execute()) {
             error_log("[loadUser] impossibile eseguire lo statement");
             return null;
         }
         $row = array();
-        $bind = $stmt->bind_result(
-                $row['id'], 
-                $row['username'], 
-                $row['password'], 
-                $row['first_name'], 
-                $row['last_name'],
-                $row['email'],
-                $row['isProvider'] );
+        
+        $bind = Database::outputBind(
+                    $stmt,
+                    $row['id'], 
+                    $row['username'], 
+                    $row['password'], 
+                    $row['first_name'], 
+                    $row['last_name'],
+                    $row['email'],
+                    $row['isProvider'] );
         
         if (!$bind) {
-            error_log("[loadUser] impossibile effettuare il binding in output");
             return null;
         }
 
         if (!$stmt->fetch()) {
             return null;
         }
+        
+    }*/
 
-        $stmt->close();
-
-        return self::buildUser($row);
-    }
-
-    private function buildUser($row) {
+    private static function getUserFromArray($row) {
         $user = new User();
         $user->setId($row["id"]);
         $user->setFirstName($row['first_name']);
@@ -74,6 +69,22 @@ class UserFactory {
             $user->setRole(User::Learner);
         }
         return $user;
+    }
+    
+    public static function getUserFromId($id) {
+        $db = new Database();
+        $db->connect();
+        $db->prepare("select * from users where id = ?");
+        $db->bind('i', $id);
+        $row = $db->fetch();
+        $db->close();
+        
+        if (isset($row)) {
+            return self::getUserFromArray($row);
+        } else {
+            echo "oh-oh<br/>$id";
+            return null;
+        }
     }
     
 }

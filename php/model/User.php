@@ -2,8 +2,8 @@
 
 class User {
     
-    const Learner = 'learner';
-    const Provider = 'provider';
+    const Learner = '1';
+    const Provider = '2';
     
     private $id;
     private $firstName;

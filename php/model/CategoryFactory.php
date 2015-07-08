@@ -9,27 +9,25 @@ class CategoryFactory {
         
     }
     
-     public static function getCategories() {
+    public static function getCategories() {
             
-        $categories = null;
-        $mysqli = Database::connect();
-        if (!isset($mysqli)) {
-            return null;
-        }
+        $categories = array();
+        $db = new Database();
+        $db->connect();
         $query = "select id, name from categories";
-        $result = $mysqli->query($query);
-        if ($mysqli->errno > 0){
-            error_log("[getCategories] Errore nella esecuzione della query $mysqli->errno : $mysqli->error", 0);
-        } else {
-            $categories = array();
-            while($row = $result->fetch_array()){
-                $categories[] = self::getCategoryFromArray($row);
-            }
-            return $categories;
+        $db->prepare($query);
+        
+        while ($row = $db->fetch()) {
+            $categories[] = self::getCategoryFromArray($row);
         }
+        $db->close();
+        
+        return $categories;
     }
     
-    public static function getCategoryFromArray($array) {   
+    
+    
+    public static function getCategoryFromArray(&$array) {   
         /// controlli mancanti
         $category = new Category();
         $category->setId($array['id']);        
@@ -38,31 +36,21 @@ class CategoryFactory {
     }
     
     public static function getCategoryFromId($id) {
-        $mysqli = Database::connect();
-        if (!isset($mysqli)) {
-            return null;
-        }
-
+        
+        $db = new Database();
+        $db->connect();
         $query = "select id, name from categories
                   where id = ?";
+        $db->prepare($query);
+        $db->bind('i', $id);
+        $row = $db->fetch();
+        $db->close();
         
-        $stmt = $mysqli->stmt_init();
-        $stmt->prepare($query);
-        if (!$stmt) {
-            error_log("[getCategoryFromId] impossibile inizializzare il prepared statement");
-            $mysqli->close();
+        if (isset($row)) {
+            return self::getCategoryFromArray($row);
+        } else {
             return null;
-        }
-
-        if (!$stmt->bind_param('ss', $username, $password)) {
-            error_log("[getCategoryFromId] impossibile effettuare il binding in input");
-            $mysqli->close();
-            return null;
-        }
-
-        $user = self::loadUser($stmt);
-        $mysqli->close();
-        return $user;
+        }   
     }
 }
 

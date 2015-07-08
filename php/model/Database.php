@@ -108,27 +108,30 @@ class Database {
     
     private function outputBind(&$row) {
         $result = $this->stmt->result_metadata();
-        
-        $temp = array();
+        if ($result) {
+            $temp = array();
 
-        while( $field = $result->fetch_field() ) {
-            $row[$field->name] = &$temp[$field->name];
-        }
-
-        $result->close();
-
-        try {
-            $stmtClass= new ReflectionClass('mysqli_stmt');
-            $method = $stmtClass->getMethod("bind_result");
-            if (!$method->invokeArgs($this->stmt, $row)) {
-                throw new Exception();
+            while( $field = $result->fetch_field() ) {
+                $row[$field->name] = &$temp[$field->name];
             }
-        } catch (Exception $e) {
-            $this->manageError("Impossibile eseguire il binding in output");
-            return false;
-        }
+
+            $result->close();
+
+            try {
+                $stmtClass= new ReflectionClass('mysqli_stmt');
+                $method = $stmtClass->getMethod("bind_result");
+                if (!$method->invokeArgs($this->stmt, $row)) {
+                    throw new Exception();
+                }
+            } catch (Exception $e) {
+                $this->manageError("Impossibile eseguire il binding in output");
+                return false;
+            }
         
-        return true;
+            return true;
+        } else {
+            $this->manageError("Impossibile determinare i campi per il binding in output");
+        }
     }
     
     public function error() {
@@ -165,6 +168,14 @@ class Database {
         
         $header = "[$class{$caller['function']}]";
         return $header;
+    }
+    
+    public function getMysqli() {
+        return $this->mysqli;
+    }
+    
+    public function getStmt() {
+        return $this->stmt;
     }
 }
 

@@ -71,7 +71,7 @@ class UserFactory {
         return $user;
     }
     
-    public static function getUserFromId($id) {
+    public static function getUserById($id) {
         $db = new Database();
         $db->connect();
         $db->prepare("select * from users where id = ?");

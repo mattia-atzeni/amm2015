@@ -21,7 +21,7 @@ class BaseController {
                     $username = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
                     $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : '';
                     if ( $this->login($username, $password) ) {
-                        $user = UserFactory::getUserFromId($_SESSION[self::User]);
+                        $user = UserFactory::getUserById($_SESSION[self::User]);
                     } else {
                         $vd->setErrorMessage("Utente sconosciuto o password errata");
                     }
@@ -31,7 +31,7 @@ class BaseController {
             }
         } else {
             if ($this->loggedIn()) {
-                $user = UserFactory::getUserFromId($_SESSION[self::User]);
+                $user = UserFactory::getUserById($_SESSION[self::User]);
             }
         }
         $this->showHomePage($vd, $user);

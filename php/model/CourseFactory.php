@@ -3,6 +3,8 @@
 include_once 'Database.php';
 include_once 'Course.php';
 include_once 'CategoryFactory.php';
+include_once 'PlatformFactory.php';
+include_once 'UserFactory.php';
 
 class CourseFactory {
     
@@ -16,50 +18,33 @@ class CourseFactory {
             if (isset($array['name']) && isset($array['link']) && isset($array['category'])) {
                 $course->setName($array['name']);
                 $course->setLink($array['link']);
-                $course->setCategory(CategoryFactory::getCategoryFromId($array['category']));
+                $course->setCategory(CategoryFactory::getCategoryById($array['category']));
+                $course->setPlatform(PlatformFactory::getPlatformByLink($array['link']));
+                $course->setOwner(UserFactory::getUserById($_SESSION[BaseController::User]));
+                return $course;
             }
         }
+        return null;
     }
     
     public static function newCourse(Course $course) {
         $query = "insert into courses (name, link, category_id, owner_id, platform_id)
                   values (?, ?, ?, ?, ?)";
-        self::toDatabase($course, $query);
         
-    }
-    
-    private static function toDatabase(Course $course, $query){
-        $mysqli = Database::connect();
-        if (!isset($mysqli)) {
-            return 0;
-        }
-
-        $stmt = Database::prepareStatement($mysqli, $query);
-        if (!isset($stmt)) {
-            return 0;
-        }
-        
-        $bind = $stmt->bind_param('ssiii', 
+        $db = new Database();
+        $db->connect();
+        $db->prepare($query);
+        $db->bind('ssiii', 
                 $course->getName(),
                 $course->getLink(),
                 $course->getCategory()->getId(),
-                $course->getOwner(),
-                $course->getPlatform());
+                $course->getOwner()->getId(),
+                $course->getPlatform()->getId() );
         
-        if (!$bind) {
-            error_log("[toDatabase] impossibile effettuare il binding in input");
-            $mysqli->close();
-            return 0;
-        }
-
-        if (!$stmt->execute()) {
-            error_log("[toDatabase] impossibile eseguire lo statement");
-            $mysqli->close();
-            return 0;
-        }
-
-        $mysqli->close();
-        return $stmt->affected_rows;
+        $db->execute();
+        $db->close();
+        return $db->error();
+        
     }
 }
 

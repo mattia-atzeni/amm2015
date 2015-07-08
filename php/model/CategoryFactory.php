@@ -35,7 +35,7 @@ class CategoryFactory {
         return $category;
     }
     
-    public static function getCategoryFromId($id) {
+    public static function getCategoryById($id) {
         
         $db = new Database();
         $db->connect();

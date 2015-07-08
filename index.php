@@ -8,7 +8,6 @@ FrontController::dispatch();
 
 class FrontController {
     public static function dispatch() {
-        //echo "session_start";
         session_start();
         if (isset($_REQUEST["page"])) {
             switch ($_REQUEST["page"]) {
@@ -17,7 +16,6 @@ class FrontController {
                     $controller->handleInput();
                     break;
                 case "learner":
-                    // controllare permessi
                     $controller = new LearnerController();
                     if (isset($_SESSION[BaseController::Role]) &&
                         $_SESSION[BaseController::Role] != User::Learner) {

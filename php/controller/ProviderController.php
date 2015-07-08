@@ -25,7 +25,8 @@ class ProviderController extends BaseController {
         if (isset($cmd)) {
             switch ($cmd) {
                 case "save_course":
-                    $course = CourseFactory::buildFromArray($_REQUEST);                    
+                    $course = CourseFactory::getCourseFromArray($_REQUEST);
+                    CourseFactory::newCourse($course);
             }
         }
         

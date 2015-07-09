@@ -51,6 +51,7 @@ include_once 'ViewDescriptor.php';
             }
             ?>
         </div>
+
         <footer>
             <p>
                 Progetto di Amministrazione di Sistema 2015<br/>

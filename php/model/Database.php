@@ -1,5 +1,5 @@
 <?php
-include_once './php/Settings.php';
+include_once 'php/Settings.php';
 
 class Database {
     

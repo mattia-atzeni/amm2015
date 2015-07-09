@@ -14,7 +14,9 @@
                 <?php
                 foreach ($courses as $course) {
                     ?>
-                <li class="<?=$course->getPlatform()->getName()?>"><?=$course->getName()?></li><?php
+                <li class="<?=$course->getPlatform()->getName()?>">
+                    <a href="<?=$course->getLink()?>" target="_blank"><?=$course->getName()?></a>
+                </li><?php
                 }
                 ?>
             </ul>

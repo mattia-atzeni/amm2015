@@ -7,34 +7,28 @@ class BaseController {
 
     const User = 'user';
     const Role = 'role';
+    protected $vd;
 
     public function __construct() {
-        
+        $this->vd = new ViewDescriptor();
     }
 
     public function handleInput() {
-        $vd = new ViewDescriptor();
-        $user = null;
         if (isset($_REQUEST["cmd"])) {
             switch ($_REQUEST["cmd"]) {
                 case 'login':
                     $username = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
                     $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : '';
-                    if ( $this->login($username, $password) ) {
-                        $user = UserFactory::getUserById($_SESSION[self::User]);
-                    } else {
-                        $vd->setErrorMessage("Utente sconosciuto o password errata");
+                    if ( !$this->login($username, $password) ) {
+                        $this->vd->addErrorMessage('username-password', "Utente sconosciuto o password errata");
                     }
                     break;
                 case "logout":
                     $this->logout();
             }
-        } else {
-            if ($this->loggedIn()) {
-                $user = UserFactory::getUserById($_SESSION[self::User]);
-            }
         }
-        $this->showHomePage($vd, $user);
+        
+        $this->showHomePage();
     }
 
     protected function login($username, $password) {
@@ -63,15 +57,18 @@ class BaseController {
         return isset($_SESSION) && array_key_exists(self::User, $_SESSION);
     }
     
-    protected function showHomePage($vd, $user) {
-        if (!isset($user)) {
+    protected function showHomePage() {
+        if (!$this->loggedIn()) {
             $path = "php/view/login/";
         } else {
+            $user = UserFactory::getUserById($_SESSION[self::User]);
             $path = "php/view/provider/";
         }
         
-        $vd->setContent($path . "content.php");
-        $vd->setNavigationBar($path . "navigationBar.php");
+        $this->vd->setContent($path . "content.php");
+        $this->vd->setNavigationBar($path . "navigationBar.php");
+        
+        $vd = $this->vd;
         
         require "php/view/master.php";
     }

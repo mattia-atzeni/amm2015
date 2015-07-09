@@ -25,13 +25,20 @@ include_once 'ViewDescriptor.php';
         <br/>
         <div id="content">
             <?php
-            if ($vd->getErrorMessage() != null) {
+            if (count($vd->getErrorMessages()) != 0) {
                 ?>
                 <div class="error">
                     <div>
-                        <?=
-                        $vd->getErrorMessage();
+                        <ul>
+                        <?php
+                        $errors = $vd->getErrorMessages();
+                        foreach ($errors as $error) {
+                            ?>
+                            <li><?=$error?></li>
+                            <?php
+                        }
                         ?>
+                        </ul>
                     </div>
                 </div>
                 <?php

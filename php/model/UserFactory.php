@@ -8,52 +8,6 @@ class UserFactory {
         
     }
     
-    public static function login($username, $password) {
-        $db = new Database();
-        $db->connect();
-        $query = "select id, username, password, first_name, last_name, email, isProvider from users
-                  where username = ? and password = ?";
- 
-        $db->prepare($query);
-        $db->bind('ss', $username, $password);
-        $row = $db->fetch();
-        $db->close();
-        if (isset($row)) {
-            $user = self::getUserFromArray($row);
-        } else {
-            return null;
-        }
-        return $user;
-    }
-    
-    /*private function loadUser(mysqli_stmt $stmt) {
-        
-        if (!$stmt->execute()) {
-            error_log("[loadUser] impossibile eseguire lo statement");
-            return null;
-        }
-        $row = array();
-        
-        $bind = Database::outputBind(
-                    $stmt,
-                    $row['id'], 
-                    $row['username'], 
-                    $row['password'], 
-                    $row['first_name'], 
-                    $row['last_name'],
-                    $row['email'],
-                    $row['isProvider'] );
-        
-        if (!$bind) {
-            return null;
-        }
-
-        if (!$stmt->fetch()) {
-            return null;
-        }
-        
-    }*/
-
     private static function getUserFromArray($row) {
         $user = new User();
         $user->setId($row["id"]);
@@ -71,6 +25,23 @@ class UserFactory {
         return $user;
     }
     
+    public static function login($username, $password) {
+        $db = new Database();
+        $db->connect();
+        $query = "select id, username, password, first_name, last_name, email, isProvider from users
+                  where username = ? and password = ?";
+ 
+        $db->prepare($query);
+        $db->bind('ss', $username, $password);
+        $row = $db->fetch();
+        $db->close();
+        if (isset($row)) {
+            return self::getUserFromArray($row);
+        } else {
+            return null;
+        }
+    }
+    
     public static function getUserById($id) {
         $db = new Database();
         $db->connect();
@@ -82,7 +53,6 @@ class UserFactory {
         if (isset($row)) {
             return self::getUserFromArray($row);
         } else {
-            echo "oh-oh<br/>$id";
             return null;
         }
     }

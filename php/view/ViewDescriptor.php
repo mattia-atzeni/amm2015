@@ -2,16 +2,21 @@
 
 class ViewDescriptor {
     private $title;
-    private $errorMessage;
+    private $errorMessages;
     private $navigationBar;
     private $content;
+    private $subpage;
+
+    public function __construct() {
+        $this->errorMessages = array();
+    }
     
     public function getTitle() {
         return $this->title;
     }
 
-    public function getErrorMessage() {
-        return $this->errorMessage;
+    public function getErrorMessages() {
+        return $this->errorMessages;
     }
 
     public function getNavigationBar() {
@@ -21,13 +26,17 @@ class ViewDescriptor {
     public function getContent() {
         return $this->content;
     }
+    
+    public function getSubpage() {
+        return $this->subpage;
+    }
 
     public function setTitle($title) {
         $this->title = $title;
     }
 
-    public function setErrorMessage($errorMessage) {
-        $this->errorMessage = $errorMessage;
+    public function addErrorMessage($key, $value) {
+        $this->errorMessages[$key] = $value;
     }
 
     public function setNavigationBar($navigationBar) {
@@ -36,5 +45,9 @@ class ViewDescriptor {
 
     public function setContent($content) {
         $this->content = $content;
-    } 
+    }
+    
+    public function setSubpage($subpage) {
+        $this->subpage = $subpage;
+    }
 }

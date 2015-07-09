@@ -31,6 +31,21 @@ class PlatformFactory {
         }
     }
     
+    public static function getPlatformById($id) {
+        $db = new Database();
+        $db->connect();
+        $db->prepare("select * from platforms where id = ?");
+        $db->bind('i', $id);
+        $row = $db->fetch();
+        $db->close();
+        
+        if (isset($row)) {
+            return self::getPlatformFromArray($row);
+        } else {
+            return null;
+        }
+    }
+    
     private static function getPlatformFromArray($array) {
         $platform = new Platform();
         
@@ -55,4 +70,3 @@ class PlatformFactory {
         return $platform;
     }
 }
-

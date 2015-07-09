@@ -1,5 +1,10 @@
 <?php
 
+include_once 'Platform.php';
+include_once 'User.php';
+include_once 'Category.php';
+
+
 class Course {
     private $id;
     private $name;
@@ -42,24 +47,20 @@ class Course {
     }
 
     public function setName($name) {
-        $this->name = $name;
-        return true;
+        if ($name != "") {
+            $this->name = $name;
+            return true;
+        }
+        return false;
     }
 
     public function setLink($link) {
         $valid = filter_var($link, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
         if (isset($valid)) {
-            $this->link = $link;
+            $this->link = $valid;
             return true;
-        } else {
-            $temp = "http://" . $link;
-            $valid = filter_var($temp, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
-            if (isset($valid)) {
-                $this->link = $link;
-                return true;
-            }
-            return false;
         }
+        return false;
     }
 
     public function setCategory(Category $category) {
@@ -67,12 +68,12 @@ class Course {
         return true;
     }
 
-    public function setPlatform($platform) {
+    public function setPlatform(Platform $platform) {
         $this->platform = $platform;
         return true;
     }
 
-    public function setOwner($owner) {
+    public function setOwner(User $owner) {
         $this->owner = $owner;
         return true;
     }

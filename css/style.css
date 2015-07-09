@@ -111,12 +111,24 @@ button[type="submit"]:active {
 }
 
 footer {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
     width: 100%;
     padding: 1em;
     color: #454545;
-    border: 1px solid #454545;
-    border-radius: 1em;
+    border-top: 1px solid #454545;
+}
+
+.courses li {
+    list-style-type: none;
+    border: 1px solid black;
+    margin: 10px;
+    min-width: 350px;
+    float: left;
+}
+
+.courses .coursera {
+    background-image: url(images/coursera.jpg);
+    background-size: 128px 128px;
+    padding-left: 140px;
+    background-repeat: no-repeat;
+    line-height: 128px;
 }

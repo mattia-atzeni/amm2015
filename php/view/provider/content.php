@@ -8,13 +8,13 @@
         <h2>Ciao, <?=$user->getFirstName()?>!</h2>
         <h3>I tuoi corsi</h3>
         <?php
-            $courses = CourseFactory::getCoursesByOwner($user->getId());
+            $courses = CourseFactory::getCoursesByOwnerId($user->getId());
             ?>
-            <ul>
+            <ul class="courses">
                 <?php
                 foreach ($courses as $course) {
                     ?>
-                    <li><?=$course->getName()?></li><?php
+                <li class="<?=$course->getPlatform()->getName()?>"><?=$course->getName()?></li><?php
                 }
                 ?>
             </ul>

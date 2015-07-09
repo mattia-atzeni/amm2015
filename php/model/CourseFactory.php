@@ -44,7 +44,7 @@ class CourseFactory {
         return !$db->error();       
     }
     
-    public static function getCoursesByOwner($owner_id) {
+    public static function getCoursesByOwnerId($owner_id) {
         
         $courses = array();
         $query = "select * from courses where owner_id = ?";

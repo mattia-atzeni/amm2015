@@ -28,8 +28,8 @@ class UserFactory {
     public static function login($username, $password) {
         $db = new Database();
         $db->connect();
-        $query = "select * from users
-                  where username = ? and password = ?";
+        $query = "select * from users "
+                  . "where username = ? and password = ?";
  
         $db->prepare($query);
         $db->bind('ss', $username, $password);
@@ -43,18 +43,14 @@ class UserFactory {
     }
     
     public static function getUserById($id) {
-        $db = new Database();
-        $db->connect();
-        $db->prepare("select * from users where id = ?");
-        $db->bind('i', $id);
-        $row = $db->fetch();
-        $db->close();
+        
+        $row = Database::selectById("select * from users where id = ?", $id);
         
         if (isset($row)) {
             return self::getUserFromArray($row);
         } else {
             return null;
-        }
+        }       
     }
     
 }

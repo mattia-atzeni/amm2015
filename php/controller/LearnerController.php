@@ -14,7 +14,6 @@ class LearnerController extends BaseController {
     
     public function handleInput() {
         if ($this->loggedIn()) {
-            $user = UserFactory::getUserById($_SESSION[BaseController::User]);
             $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
 
             if (isset($subpage)) {
@@ -25,21 +24,31 @@ class LearnerController extends BaseController {
 
             if (isset($cmd)) {
                 switch ($cmd) {
-                    case "join":
-                        if (isset($_REQUEST['course_id'])) {
-                            $course = CourseFactory::getCourseById($_REQUEST['course_id']);
-                            if (isset($course)) {
-                                if (CourseFactory::enroll($user, $course)) {
-                                    break;
-                                }
-                            }
-                        }
-                        $this->vd->addErrorMessage("enrollment", "Impossibile completare l'iscrizione al corso");
-                        break;
+                    case "join": $this->handleJoinCmd(); break;
+                        
                 }
             }
         }
         
         $this->showHomePage();
+    }
+    
+    private function handleJoinCmd() {
+        if (isset($_REQUEST['course_id'])) {
+            $user = UserFactory::getUserById($_SESSION[BaseController::User]);
+            $course = CourseFactory::getCourseById($_REQUEST['course_id']);
+            if (isset($course)) {
+                if (CourseFactory::enroll($user, $course)) {
+                    return;
+                }
+            }
+        }
+        
+        if (CourseFactory::isEnrolled($user, $course)) {
+            $this->vd->addErrorMessage("enrollment", "Sei già iscritto a questo corso");
+        }
+        else {
+            $this->vd->addErrorMessage("enrollment", "Impossibile completare l'iscrizione al corso");
+        }
     }
 }

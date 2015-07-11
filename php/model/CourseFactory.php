@@ -80,12 +80,8 @@ class CourseFactory {
     }
     
     public static function getCourseById($course_id) {
-        $db = new Database();
-        $db->connect();
-        $db->prepare("select * from courses where id = ?");
-        $db->bind('i', $course_id);
-        $row = $db->fetch();
-        $db->close();
+        
+        $row = Database::selectById("select * from courses where id = ?", $id);
         
         if (isset($row)) {
             return self::getCourseFromArray($row);
@@ -103,6 +99,17 @@ class CourseFactory {
         $db->execute();
         $db->close();
         return !$db->error();
+    }
+    
+    public static function isEnrolled(User $user, Course $course) {
+        $query = "select * from courses_learners where learner_id = ? and course_id = ?";
+        $db = new Database();
+        $db->connect();
+        $db->prepare($query);
+        $db->bind('ii', $user->getId(), $course->getId());
+        $row = $db->fetch();
+        $db->close();
+        return isset($row);
     }
     
     public static function getCoursesByLearnerId($id) {

@@ -7,6 +7,7 @@ class Database {
     private $stmt;
     private $error = true;
     private $executed = false;
+    private $stackCounter = 3;
         
     public function connect() {
         $this->error = false;
@@ -100,8 +101,10 @@ class Database {
             if (!$this->stmt->fetch()) {
                 return null;
             }
-
-            return $result;
+            
+            if (count($result) > 0) {
+                return $result;
+            }
         }
         return null;
     }
@@ -142,7 +145,7 @@ class Database {
         $this->close();
         $this->error = true;
         $header = $this->buildErrorMessageHeader();
-        echo("$header $message");
+        echo ("$header $message");
     }
     
     public function close() {
@@ -159,7 +162,7 @@ class Database {
     
     private function buildErrorMessageHeader() {
         $trace = debug_backtrace();
-        $caller = $trace[3];
+        $caller = $trace[$this->stackCounter];
         $class = "";
 
         if (isset($caller['class'])) {
@@ -176,6 +179,17 @@ class Database {
     
     public function getStmt() {
         return $this->stmt;
+    }
+    
+    public static function selectById($query, $id) {
+        $db = new Database();
+        $db->stackCounter++;
+        $db->connect();
+        $db->prepare($query);
+        $db->bind('i', $id);
+        $row = $db->fetch();
+        $db->close();
+        return $row;
     }
 }
 

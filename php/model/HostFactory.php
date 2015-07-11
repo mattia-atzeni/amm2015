@@ -35,12 +35,8 @@ class HostFactory {
             $result->setName("altro");
             return $result;
         }
-        $db = new Database();
-        $db->connect();
-        $db->prepare("select * from hosts where id = ?");
-        $db->bind('i', $id);
-        $row = $db->fetch();
-        $db->close();
+        
+        $row = Database::selectById("select * from hosts where id = ?", $id);
         
         if (isset($row)) {
             return self::getHostFromArray($row);

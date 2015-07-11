@@ -14,7 +14,7 @@ class CategoryFactory {
         $categories = array();
         $db = new Database();
         $db->connect();
-        $query = "select id, name from categories";
+        $query = "select * from categories";
         $db->prepare($query);
         
         while ($row = $db->fetch()) {
@@ -27,8 +27,7 @@ class CategoryFactory {
     
     
     
-    public static function getCategoryFromArray(&$array) {   
-        /// controlli mancanti
+    private static function getCategoryFromArray(&$array) {   
         $category = new Category();
         $category->setId($array['id']);        
         $category->setName($array['name']);
@@ -36,15 +35,10 @@ class CategoryFactory {
     }
     
     public static function getCategoryById($id) {
-        
-        $db = new Database();
-        $db->connect();
         $query = "select id, name from categories
                   where id = ?";
-        $db->prepare($query);
-        $db->bind('i', $id);
-        $row = $db->fetch();
-        $db->close();
+        
+        $row = Database::selectById($query, $id);
         
         if (isset($row)) {
             return self::getCategoryFromArray($row);

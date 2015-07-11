@@ -2,6 +2,7 @@
 
 include_once 'php/model/UserFactory.php';
 include_once 'php/view/ViewDescriptor.php';
+include_once 'php/model/User.php';
 
 class BaseController {
 
@@ -58,11 +59,19 @@ class BaseController {
     }
     
     protected function showHomePage() {
+        $path = "php/view/";
         if (!$this->loggedIn()) {
-            $path = "php/view/login/";
+            $path .= "login/";
         } else {
             $user = UserFactory::getUserById($_SESSION[self::User]);
-            $path = "php/view/provider/";
+            switch ($_SESSION[self::Role]) {
+                case User::Learner:
+                    $path .= "learner/";
+                    break;
+                case User::Provider:
+                    $path .= "provider/";
+                    break;
+            }
         }
         
         $this->vd->setContent($path . "content.php");

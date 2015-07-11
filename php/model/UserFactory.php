@@ -28,7 +28,7 @@ class UserFactory {
     public static function login($username, $password) {
         $db = new Database();
         $db->connect();
-        $query = "select id, username, password, first_name, last_name, email, isProvider from users
+        $query = "select * from users
                   where username = ? and password = ?";
  
         $db->prepare($query);

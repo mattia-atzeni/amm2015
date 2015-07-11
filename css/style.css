@@ -3,14 +3,18 @@
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: auto;
+    background-color: #f9f9f9;
     padding: 0;
     margin: 0;
+    color: #454545;
 }
 
 /* Barra di Navigazione */
 
 nav ul {
+    position: relative;
     text-align: right;
     list-style-type: none;
     background: #494949;
@@ -89,7 +93,7 @@ nav li a:hover {
     text-shadow: 0px 0px 1px white;
 }
 
-button[type="submit"] {
+#login-form button[type="submit"] {
     background: linear-gradient(#52b1FF, #2276E3);
     background: -webkit-linear-gradient(#52a1FF, #2276E3);
     border-radius: 13px;
@@ -98,16 +102,27 @@ button[type="submit"] {
     color: white;
 }
 
-button[type="submit"]:hover {
+#login-form button[type="submit"]:hover {
     background: linear-gradient(#72c1FF, #2296ff);
     background: -webkit-linear-gradient(#72c1FF, #2296ff);
     box-shadow: 0px 0px 2px rgba(131, 255, 237, 0.52);
     color: white;
 }
 
-button[type="submit"]:active {
+#login-form button[type="submit"]:active {
     background: linear-gradient(#2296ff, #72c1FF);
     background: -webkit-linear-gradient(#2296ff, #72c1FF);
+}
+
+#sidebar1 {
+    float: left;
+    width: 20%;
+    padding-top: 5%;
+    margin-left: 10%;
+}
+
+#sidebar1 ul {
+    list-style-type: none;
 }
 
 footer {
@@ -115,28 +130,109 @@ footer {
     clear: both;
     width: 100%;
     padding: 1em;
-    color: #454545;
     border-top: 1px solid #454545;
 }
 
-.courses li {
-    list-style-type: none;
-    border: 1px solid black;
-    margin: 10px;
-    min-width: 350px;
-    width: 40%;
+#content {
+    /*border: 1px solid black;
+    position: absolute;
+    left: 50%;
+    margin-left: -450px;
+    width: 900px; 
+    padding: 32px;*/
+    float: left;
 }
 
-.courses li a {
+.courses {
+    margin: 0;
+    padding: 0;
+}
+
+.courses li {
+    background-color: white;
+    list-style-type: none;
+    border-radius: 3px;
+    box-shadow: 0px 0px 4px rgba(45, 45, 45, 0.4);
+    margin-top: 32px;
+    margin-bottom: 32px;
+    min-width: 512px;
+    width: 70%;
+    background-size: 128px 128px;
+    background-repeat: no-repeat;
+}
+
+.courses li:hover {
+    box-shadow: 0px 0px 4px #3461ff;
+}
+
+.courses .course {
     display: block;
-    color: #212121;
     text-decoration: none;
+    height: 128px;
+    padding: 32px 10px 32px 160px;
+    line-height: 32px;
+    color: #454545;
+    z-index: 0;
+}
+
+.courses .name {
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    font-size: 1.2em;
+}
+
+.courses .category {
+    font-size: 1em;
+    margin: 0;
+    padding: 0;
 }
 
 .courses .coursera {
     background-image: url(../images/coursera.jpg);
-    background-size: 128px 128px;
-    padding-left: 140px;
-    background-repeat: no-repeat;
-    line-height: 128px;
 }
+
+.courses .edX {
+    background-image: url(../images/edX.jpg);
+}
+
+.courses .pluralsight {
+    background-image: url(../images/pluralsight.jpg);
+}
+
+.courses .digital-tutors {
+    background-image: url(../images/digital-tutors.jpg);
+}
+
+.courses .udacity {
+    background-image: url(../images/udacity.jpg);
+}
+
+.courses .altro {
+    background-image: url(../images/mooc.jpg);
+}
+
+.join-button {
+    position: relative;
+    text-decoration: none;
+    bottom: 48px;
+    right: 20px;
+    display: block;
+    float: right;
+    background-color: #2276d3;
+    border-radius: 4px;
+    border: 1px solid #3087b2;
+    padding: 0.5em 1em 0.5em 1em;
+    color: white;
+    z-index: 1;
+}
+
+
+.join-button:hover {
+    background-color: #1263d3;
+}
+
+.clear {
+    clear: both;
+}
+

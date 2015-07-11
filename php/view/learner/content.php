@@ -1,14 +1,12 @@
 <?php
-
-    if ($vd->getSubpage() != null){
+    if ($vd->getSubpage() != null && $vd->getSubpage() != "home") {
         include $vd->getSubpage() . ".php";
     }
     else {   
         ?>
         <h2>Ciao, <?=$user->getFirstName()?>!</h2>
-        <h3>I tuoi corsi</h3>
         <?php
-            $courses = CourseFactory::getCoursesByOwnerId($user->getId());
+            $courses = CourseFactory::getCoursesByLearnerId($user->getId());
             ?>
             <ul class="courses">
                 <?php
@@ -25,8 +23,8 @@
                 ?>
             </ul>
 
-        <form action="provider/new_course" method="post">
-            <button type="submit">Nuovo Corso</button>
+        <form method="post" action="learner/browse">
+            <button type="submit">Browse</button>
         </form>
         <?php
     }

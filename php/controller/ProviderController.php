@@ -3,7 +3,7 @@ include_once 'BaseController.php';
 include_once 'php/model/CourseFactory.php';
 include_once 'php/model/Course.php';
 include_once 'php/model/CategoryFactory.php';
-include_once 'php/model/PlatformFactory.php';
+include_once 'php/model/HostFactory.php';
 
 class ProviderController extends BaseController {
       
@@ -66,8 +66,8 @@ class ProviderController extends BaseController {
         }
         
         if (count($this->vd->getErrorMessages()) == 0) {
-            $platform = PlatformFactory::getPlatformByLink($_REQUEST['link']);
-            $course->setPlatform($platform);
+            $host = HostFactory::getHostByLink($_REQUEST['link']);
+            $course->setHost($host);
             
             $course->setOwner(UserFactory::getUserById($_SESSION[BaseController::User]));
             

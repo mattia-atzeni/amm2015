@@ -1,6 +1,6 @@
 <?php
 
-include_once 'Platform.php';
+include_once 'Host.php';
 include_once 'User.php';
 include_once 'Category.php';
 
@@ -10,7 +10,7 @@ class Course {
     private $name;
     private $link;
     private $category;
-    private $platform;
+    private $host;
     private $owner;
     
     public function getId() {
@@ -29,8 +29,8 @@ class Course {
         return $this->category;
     }
 
-    public function getPlatform() {
-        return $this->platform;
+    public function getHost() {
+        return $this->host;
     }
 
     public function getOwner() {
@@ -68,8 +68,8 @@ class Course {
         return true;
     }
 
-    public function setPlatform(Platform $platform) {
-        $this->platform = $platform;
+    public function setHost(Host $host) {
+        $this->host = $host;
         return true;
     }
 

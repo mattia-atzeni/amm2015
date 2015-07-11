@@ -2,6 +2,7 @@
 
 include_once 'php/controller/BaseController.php';
 include_once 'php/controller/ProviderController.php';
+include_once 'php/controller/LearnerController.php';
 include_once 'php/model/User.php';
 
 FrontController::dispatch();

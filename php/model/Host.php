@@ -1,6 +1,6 @@
 <?php
 
-class Platform {
+class Host {
     private $id;
     private $name;
     private $link;

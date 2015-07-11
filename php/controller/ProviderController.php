@@ -12,7 +12,8 @@ class ProviderController extends BaseController {
     }
     
     public function handleInput() {
-        $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : null;
+        $this->vd->setPage("provider");
+        $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
         
         if (isset($subpage)) {
             $this->vd->setSubpage($subpage);
@@ -26,19 +27,20 @@ class ProviderController extends BaseController {
                     $course = $this->getCourse();
                     if (isset($course)) {
                         if (CourseFactory::saveCourse($course)) {
-                            $this->vd->setSubpage(null);
+                            $this->vd->setSubpage("home");
                         } else {
                             $this->vd->addErrorMessage("dberror", "Impossibile salvare il corso");
+                            $this->vd->setSubpage("new_course");
                         }
                     }
                     break;
                 case "cancel":
-                    $this->vd->setSubpage(null);
+                    $this->vd->setSubpage("home");
                     break;
             }
         }
         
-        $this->showHomePage();
+        $this->showPage();
     }
     
     private function getCourse() {

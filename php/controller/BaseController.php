@@ -15,6 +15,8 @@ class BaseController {
     }
 
     public function handleInput() {
+        $this->vd->setPage("login");
+        
         if (isset($_REQUEST["cmd"])) {
             switch ($_REQUEST["cmd"]) {
                 case 'login':
@@ -29,7 +31,7 @@ class BaseController {
             }
         }
         
-        $this->showHomePage();
+        $this->showPage();
     }
 
     protected function login($username, $password) {
@@ -58,24 +60,23 @@ class BaseController {
         return isset($_SESSION) && array_key_exists(self::User, $_SESSION);
     }
     
-    protected function showHomePage() {
-        $path = "php/view/";
-        if (!$this->loggedIn()) {
-            $path .= "login/";
-        } else {
+    protected function showPage() {
+
+        if ($this->loggedIn()) {
             $user = UserFactory::getUserById($_SESSION[self::User]);
             switch ($_SESSION[self::Role]) {
                 case User::Learner:
-                    $path .= "learner/";
+                    $this->vd->setPage("learner");
                     break;
                 case User::Provider:
-                    $path .= "provider/";
+                    $this->vd->setPage("provider");
                     break;
             }
         }
         
-        $this->vd->setContent($path . "content.php");
-        $this->vd->setNavigationBar($path . "navigationBar.php");
+        $path = "php/view/" . $this->vd->getPage();
+        $this->vd->setContent($path . "/content.php");
+        $this->vd->setNavigationBar($path . "/navigationBar.php");
         
         $vd = $this->vd;
         

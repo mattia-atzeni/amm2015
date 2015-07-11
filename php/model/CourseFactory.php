@@ -79,7 +79,7 @@ class CourseFactory {
         return $courses;
     }
     
-    public static function getCourseById($course_id) {
+    public static function getCourseById($id) {
         
         $row = Database::selectById("select * from courses where id = ?", $id);
         
@@ -110,6 +110,17 @@ class CourseFactory {
         $row = $db->fetch();
         $db->close();
         return isset($row);
+    }
+    
+    public static function unenroll(User $user, Course $course) {
+        $query = "delete from courses_learners where learner_id = ? and course_id = ?";
+        $db = new Database();
+        $db->connect();
+        $db->prepare($query);
+        $db->bind('ii', $user->getId(), $course->getId());
+        $db->execute();
+        $db->close();
+        return !$db->error();
     }
     
     public static function getCoursesByLearnerId($id) {

@@ -6,6 +6,7 @@ class ViewDescriptor {
     private $navigationBar;
     private $content;
     private $subpage;
+    private $page;
 
     public function __construct() {
         $this->errorMessages = array();
@@ -30,6 +31,10 @@ class ViewDescriptor {
     public function getSubpage() {
         return $this->subpage;
     }
+    
+    public function getPage() {
+        return $this->page;
+    }
 
     public function setTitle($title) {
         $this->title = $title;
@@ -49,5 +54,9 @@ class ViewDescriptor {
     
     public function setSubpage($subpage) {
         $this->subpage = $subpage;
+    }
+    
+    public function setPage($page) {
+        $this->page = $page;
     }
 }

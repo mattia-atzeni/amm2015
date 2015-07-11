@@ -145,7 +145,7 @@ class Database {
         $this->close();
         $this->error = true;
         $header = $this->buildErrorMessageHeader();
-        echo ("$header $message");
+        error_log("$header $message");
     }
     
     public function close() {

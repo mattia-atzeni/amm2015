@@ -13,6 +13,8 @@ class LearnerController extends BaseController {
     }
     
     public function handleInput() {
+        $this->vd->setPage("learner");
+        
         if ($this->loggedIn()) {
             $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
 
@@ -25,12 +27,13 @@ class LearnerController extends BaseController {
             if (isset($cmd)) {
                 switch ($cmd) {
                     case "join": $this->handleJoinCmd(); break;
+                    case "uneroll": $this->handleUnerollCmd(); break;
                         
                 }
             }
         }
         
-        $this->showHomePage();
+        $this->showPage();
     }
     
     private function handleJoinCmd() {
@@ -40,15 +43,27 @@ class LearnerController extends BaseController {
             if (isset($course)) {
                 if (CourseFactory::enroll($user, $course)) {
                     return;
+                } elseif (CourseFactory::isEnrolled($user, $course)) {
+                    $this->vd->addErrorMessage("enrollment", "Sei già iscritto a questo corso");
+                    return;
                 }
             }
         }
         
-        if (CourseFactory::isEnrolled($user, $course)) {
-            $this->vd->addErrorMessage("enrollment", "Sei già iscritto a questo corso");
+        $this->vd->addErrorMessage("enrollment", "Impossibile completare l'iscrizione al corso");
+    }
+    
+    private function handleUnerollCmd() {
+        if (isset($_REQUEST['course_id'])) {
+            $user = UserFactory::getUserById($_SESSION[BaseController::User]);
+            $course = CourseFactory::getCourseById($_REQUEST['course_id']);
+            if (isset($course)) {
+                if (CourseFactory::unenroll($user, $course)) {
+                    return;
+                }
+            }
         }
-        else {
-            $this->vd->addErrorMessage("enrollment", "Impossibile completare l'iscrizione al corso");
-        }
+        
+        $this->vd->addErrorMessage("uneroll", "Impossibile abbandonare il corso");
     }
 }

@@ -2,7 +2,7 @@
     include_once "php/model/CategoryFactory.php";
     $categories = CategoryFactory::getCategories();
 ?>
-<form method="post" action="">
+<form method="post" action="provider">
     <label for="name">Nome del corso</label>
     <br/>
     <input id="name" type="text" name="name">

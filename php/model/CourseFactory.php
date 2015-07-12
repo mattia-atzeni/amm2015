@@ -152,19 +152,25 @@ class CourseFactory {
         $db->connect();
         $db->prepare("delete from courses_learners where course_id = ?");
         $db->bind('i', $id);
+        $db->getMysqli()->autocommit(false);
         $db->execute();
         $db->prepare("delete from courses where id = ?");
         $db->bind('i', $id);
         $db->execute();
         
         if (!$db->error()) {
-            $affected_rows =  $db->getStmt()->affected_rows;
-        } else {
-            $affected_rows = 0;
+            if ($db->getStmt()->affected_rows == 1) {
+                    $db->getMysqli()->commit();
+                    $db->getMysqli()->autocommit(true);
+                    $db->close();
+                    return true;
+            }
+           
         }
         
+        $db->getMysqli()->rollback();
         $db->close();
-        return $affected_rows;
+        return false;
     }
 }
 

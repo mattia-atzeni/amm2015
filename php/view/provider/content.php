@@ -13,9 +13,7 @@ else {
         require 'php/view/coursesList.php';
     ?>
 
-    <form action="provider/new_course" method="post">
-        <button type="submit">Nuovo Corso</button>
-    </form>
+    <a href="provider/new_course">Nuovo Corso</a>
     <?php
 }
 ?>

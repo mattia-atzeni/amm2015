@@ -49,7 +49,7 @@ class ProviderController extends BaseController {
         if (isset($_REQUEST['course_id'])) {
             $course_id = $_REQUEST['course_id'];
             if (isset($course_id)) {
-                if (CourseFactory::removeCourseById($course_id) == 1) {
+                if (CourseFactory::removeCourseById($course_id)) {
                     return;
                 }
             }

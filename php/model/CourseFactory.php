@@ -146,5 +146,25 @@ class CourseFactory {
             return null;
         }
     }
+    
+    public static function removeCourseById($id) {
+        $db = new Database();
+        $db->connect();
+        $db->prepare("delete from courses_learners where course_id = ?");
+        $db->bind('i', $id);
+        $db->execute();
+        $db->prepare("delete from courses where id = ?");
+        $db->bind('i', $id);
+        $db->execute();
+        
+        if (!$db->error()) {
+            $affected_rows =  $db->getStmt()->affected_rows;
+        } else {
+            $affected_rows = 0;
+        }
+        
+        $db->close();
+        return $affected_rows;
+    }
 }
 

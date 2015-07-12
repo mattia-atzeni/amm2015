@@ -23,24 +23,39 @@ class ProviderController extends BaseController {
         
         if (isset($cmd)) {
             switch ($cmd) {
-                case "save_course":
-                    $course = $this->getCourse();
-                    if (isset($course)) {
-                        if (CourseFactory::saveCourse($course)) {
-                            $this->vd->setSubpage("home");
-                        } else {
-                            $this->vd->addErrorMessage("dberror", "Impossibile salvare il corso");
-                            $this->vd->setSubpage("new_course");
-                        }
-                    }
-                    break;
-                case "cancel":
-                    $this->vd->setSubpage("home");
-                    break;
+                case "save_course": $this->handleSaveCourseCmd(); break;
+                case "remove":      $this->handleRemoveCmd(); break;
+                case "cancel":      $this->vd->setSubpage("home"); break;
             }
         }
         
         $this->showPage();
+    }
+    
+    private function handleSaveCourseCmd() {
+        $course = $this->getCourse();
+        if (isset($course)) {
+            if (CourseFactory::saveCourse($course)) {
+                $this->vd->setSubpage("home");
+                return;
+            } else {
+                $this->vd->addErrorMessage("dberror", "Impossibile salvare il corso");
+            }
+        }
+        $this->vd->setSubpage("new_course");
+    }
+    
+    private function handleRemoveCmd() {
+        if (isset($_REQUEST['course_id'])) {
+            $course_id = $_REQUEST['course_id'];
+            if (isset($course_id)) {
+                if (CourseFactory::removeCourseById($course_id) == 1) {
+                    return;
+                }
+            }
+        }
+        
+        $this->vd->addErrorMessage("remove", "Errore durante la rimozione del corso");
     }
     
     private function getCourse() {

@@ -5,10 +5,17 @@ include_once 'php/model/HostFactory.php';
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <title><?php $vd->getTitle() ?></title>
-        <meta charset="utf-8"/>
         <base href="<?= Settings::getApplicationPath() ?>"/>
         <link rel="stylesheet"  type="text/css"  href="css/style.css">
+        <?php
+        foreach ($vd->getScripts() as $script) {
+            ?>
+            <script type="text/javascript" src="<?=$script?>"></script>
+            <?php
+        }
+        ?>
     </head>
 
     <body>

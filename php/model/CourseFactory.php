@@ -160,12 +160,11 @@ class CourseFactory {
         
         if (!$db->error()) {
             if ($db->getStmt()->affected_rows == 1) {
-                    $db->getMysqli()->commit();
-                    $db->getMysqli()->autocommit(true);
-                    $db->close();
-                    return true;
-            }
-           
+                $db->getMysqli()->commit();
+                $db->getMysqli()->autocommit(true);
+                $db->close();
+                return true;
+            }      
         }
         
         $db->getMysqli()->rollback();

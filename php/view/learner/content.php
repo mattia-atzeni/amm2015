@@ -11,9 +11,8 @@
             $courses = CourseFactory::getCoursesByLearnerId($user->getId());
             require 'php/view/coursesList.php';
         ?>
-        <form method="post" action="learner/catalog">
-            <button type="submit">Catalogo</button>
-        </form>
+        <a href="learner/catalog">Catalogo</a>
+        <a href="learner/filter">Cerca</a>
         <?php
     }
 ?>

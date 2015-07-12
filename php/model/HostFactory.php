@@ -58,6 +58,7 @@ class HostFactory {
             if (!$host->setId($array['id'])) {
                 return null;
             }
+            
         } else {
             return null;
         }
@@ -69,19 +70,23 @@ class HostFactory {
         return $host;
     }
     
-    public static function getHosts($limit) {
-            
-        $categories = array();
+    public static function getHosts($limit=null) {
+        $hosts = array();
         $db = new Database();
         $db->connect();
-        $query = "select * from hosts limit ?";
-        $db->prepare($query);
-        $db->bind('i', $limit);
+        
+        if (isset($limit)) {
+            $db->prepare("select * from hosts limit ?");
+            $db->bind('i', $limit);
+        } else {
+            $db->prepare("select * from hosts");
+        }
+        
         while ($row = $db->fetch()) {
-            $categories[] = self::getHostFromArray($row);
+            $hosts[] = self::getHostFromArray($row);
         }
         $db->close();
         
-        return $categories;
+        return $hosts;
     }
 }

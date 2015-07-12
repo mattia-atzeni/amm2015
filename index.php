@@ -10,31 +10,31 @@ FrontController::dispatch();
 class FrontController {
     public static function dispatch() {
         session_start();
-        if (isset($_REQUEST["page"])) {
-            switch ($_REQUEST["page"]) {
-                case "login":
-                    $controller = new BaseController();
-                    $controller->handleInput();
-                    break;
-                case "learner":
-                    $controller = new LearnerController();
-                    if (isset($_SESSION[BaseController::Role]) &&
-                        $_SESSION[BaseController::Role] != User::Learner) {
-                        self::write403();
-                    }
-                    $controller->handleInput();
-                    break;
-                case "provider":
-                    $controller = new ProviderController();
-                    if (isset($_SESSION[BaseController::Role]) &&
-                        $_SESSION[BaseController::Role] != User::Provider) {
-                        self::write403();
-                    }
-                    $controller->handleInput();
-                    break;
-                default:
-                    self::write404();
-            }
+        $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : "login";
+        
+        switch ($page) {
+            case "login":
+                $controller = new BaseController();
+                $controller->handleInput();
+                break;
+            case "learner":
+                $controller = new LearnerController();
+                if (isset($_SESSION[BaseController::Role]) &&
+                    $_SESSION[BaseController::Role] != User::Learner) {
+                    self::write403();
+                }
+                $controller->handleInput();
+                break;
+            case "provider":
+                $controller = new ProviderController();
+                if (isset($_SESSION[BaseController::Role]) &&
+                    $_SESSION[BaseController::Role] != User::Provider) {
+                    self::write403();
+                }
+                $controller->handleInput();
+                break;
+            default:
+                self::write404();
         }
     }
     

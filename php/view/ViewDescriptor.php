@@ -7,9 +7,11 @@ class ViewDescriptor {
     private $content;
     private $subpage;
     private $page;
+    private $scripts;
 
     public function __construct() {
         $this->errorMessages = array();
+        $this->scripts = array();
     }
     
     public function getTitle() {
@@ -35,6 +37,10 @@ class ViewDescriptor {
     public function getPage() {
         return $this->page;
     }
+    
+    public function getScripts() {
+        return $this->scripts;
+    }
 
     public function setTitle($title) {
         $this->title = $title;
@@ -58,5 +64,9 @@ class ViewDescriptor {
     
     public function setPage($page) {
         $this->page = $page;
+    }
+    
+    public function addScript($script) {
+        $this->scripts[] = $script;
     }
 }

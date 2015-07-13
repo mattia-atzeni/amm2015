@@ -195,7 +195,7 @@ class CourseFactory {
         return $string;
     }
     
-    public static function filter($name, &$categories, &$hosts) {
+    public static function &filter($name, &$categories, &$hosts) {
         $categoriesCondition = self::buildOrCondition(count($categories), "category_id");
         $hostsCondition = self::buildOrCondition(count($hosts), "host_id");
         $query = "select * from courses where name like ?";

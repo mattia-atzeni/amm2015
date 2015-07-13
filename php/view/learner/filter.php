@@ -6,6 +6,11 @@ $categories = CategoryFactory::getCategories();
 $hosts = HostFactory::getHosts();
 ?>
 <h2>Cerca</h2>
+
+<div class="error">
+    <ul><li>Prova</li></ul>
+</div>
+
 <form method="post">
     <label for="name">Nome</label>
     <input name="name" id="name" type="text">
@@ -33,6 +38,7 @@ $hosts = HostFactory::getHosts();
         }
         ?>  
     </p>
-    <ul id="courses-list" class="courses"></ul>
     <button id="filter" type="submit" name="cmd" value="filter">Cerca</button>
 </form>
+<p id='none'>Nessun corso trovato<p/>
+<ul id="courses-list" class="courses"></ul>

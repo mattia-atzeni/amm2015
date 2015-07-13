@@ -76,8 +76,7 @@ class LearnerController extends BaseController {
         $this->vd->addErrorMessage("uneroll", "Impossibile abbandonare il corso");
     }
     
-    private function handleFilterCmd() {
-        $errors = array();
+    private function &handleFilterCmd() {
         
         if (isset($_REQUEST['name']) ) {
             $name = $_REQUEST['name'];
@@ -92,7 +91,8 @@ class LearnerController extends BaseController {
                 if (isset($tmp)) {
                     $categories[] = $tmp;
                 } else {
-                    $errors[] = "$category: categoria non valida";
+                    $this->vd->addErrorMessage("categories", "$category: categoria non valida");
+                    break;
                 }
             }
         }
@@ -104,7 +104,8 @@ class LearnerController extends BaseController {
                 if (isset($tmp)) {
                     $hosts[] = $tmp;
                 } else {
-                    $errors[] = "$host: host non valido";
+                    $this->vd->addErrorMessage( "hosts", "$host: host non valido");
+                    break;
                 }
             }
         }

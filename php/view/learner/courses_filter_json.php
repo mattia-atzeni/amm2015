@@ -1,6 +1,7 @@
 <?php
 
 $json = array();
+$json['errors'] = $vd->getErrorMessages();
 $json['courses'] = array();
 if (isset($courses)) {
     foreach ($courses as $course) {

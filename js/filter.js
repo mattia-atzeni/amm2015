@@ -1,7 +1,15 @@
 $(document).ready( function() {
+                
+    $("#courses-list").hide();
+    $(".error").hide();
+    $("#none").hide();
+    
     $('#filter').click( function(event) {
-    	$("#courses-list").empty();
         event.preventDefault();
+         
+        $("#courses-list").empty();
+        $(".error").empty();
+        
         var _name = $('#name').val();
         var _categories = Array();
         $('#categories input[name=categories]:checked').each( function() {
@@ -25,21 +33,34 @@ $(document).ready( function() {
            data: arg,
            dataType: 'json',
            success: function(data, state) {
-               for (var key in data['courses']) {
-                   var course = data['courses'][key];
-                   $("#courses-list").append(
-                        "<li class=\""+ course['host_name'] + "\">\n\
-                            <a class=\"course\" href=\"" + course['link'] + "\" target=\"_blank\">\n\
-                                <h4 class=\"name\">" + course['name'] + "</h4>\n\
-                                <p class=\"category\">Categoria: " + course['category'] + "</p>\n\
-                            </a>\n\
-                            <form action=\"learner\" method=\"post\">\n\
-                                <input type=\"hidden\" name=\"cmd\" value=\"join\">\n\
-                                <input type=\"hidden\" name=\"course_id\" value=\"" + course['id'] + "\">\n\
-                                <button class=\"course-button\" type=\"submit\">Iscriviti</button>\n\
-                            </form>\n\
-                        </li>");
-               }
+                if (data['errors'].length === 0) {
+                    if (data['courses'].length > 0) {
+                        $('#none').hide();
+                        for (var key in data['courses']) {
+                            var course = data['courses'][key];
+                            $("#courses-list").append(
+                                 "<li class=\""+ course['host_name'] + "\">\n\
+                                     <a class=\"course\" href=\"" + course['link'] + "\" target=\"_blank\">\n\
+                                         <h4 class=\"name\">" + course['name'] + "</h4>\n\
+                                         <p class=\"category\">Categoria: " + course['category'] + "</p>\n\
+                                     </a>\n\
+                                     <form action=\"learner\" method=\"post\">\n\
+                                         <input type=\"hidden\" name=\"cmd\" value=\"join\">\n\
+                                         <input type=\"hidden\" name=\"course_id\" value=\"" + course['id'] + "\">\n\
+                                         <button class=\"course-button\" type=\"submit\">Iscriviti</button>\n\
+                                     </form>\n\
+                                 </li>");
+                        }
+                        $('#courses-list').show();
+                    } else {
+                        $('#none').show();
+                    }
+                } else {
+                    for(var key in data['errors']){
+                        $(".error ul").append("<li>" + data['errors'][key] + "<\li>");
+                    }
+                    $(".error").show();
+                }
                
            },
            error: function(data, state) {

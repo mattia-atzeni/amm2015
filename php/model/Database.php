@@ -39,7 +39,7 @@ class Database {
                 $args = func_get_args();
                 $stmtClass = new ReflectionClass('mysqli_stmt');
                 $method = $stmtClass->getMethod("bind_param");
-                if (!$method->invokeArgs($this->stmt, $args) ) {
+                if (!$method->invokeArgs($this->stmt, $args ) ) {
                     throw new Exception();
                 }
             } catch (Exception $e) {
@@ -56,8 +56,8 @@ class Database {
         error_log("$header impossibile effettuare il binding in input");
         return false;
     }
-     * 
-    private static function toReference($array) {
+     
+    private static function toReference(&$array) {
         $result = array();
         
         foreach ($array as $key => $value) {
@@ -65,8 +65,8 @@ class Database {
         }
         
         return $result;
-    }
-    */
+    }*/
+
     
     public function execute() {
         if (!$this->error) {
@@ -145,7 +145,7 @@ class Database {
         $this->close();
         $this->error = true;
         $header = $this->buildErrorMessageHeader();
-        echo("$header $message");
+        error_log("$header $message");
     }
     
     public function close() {

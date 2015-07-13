@@ -20,6 +20,11 @@ class LearnerController extends BaseController {
 
             if (isset($subpage)) {
                 $this->vd->setSubpage($subpage);
+                switch($subpage) {
+                    case "filter":  $this->vd->addScript("js/jquery-2.1.1.min.js");
+                                    $this->vd->addScript("js/filter.js");
+                                    break;
+                }
             }
 
             $cmd = isset($_REQUEST['cmd']) ? $_REQUEST['cmd'] : null;
@@ -28,6 +33,9 @@ class LearnerController extends BaseController {
                 switch ($cmd) {
                     case "join": $this->handleJoinCmd(); break;
                     case "uneroll": $this->handleUnerollCmd(); break;
+                    case "filter": $courses = $this->handleFilterCmd();
+                                    require 'php/view/learner/courses_filter_json.php';
+                                    return;
                         
                 }
             }
@@ -65,5 +73,42 @@ class LearnerController extends BaseController {
         }
         
         $this->vd->addErrorMessage("uneroll", "Impossibile abbandonare il corso");
+    }
+    
+    private function handleFilterCmd() {
+        $errors = array();
+        
+        if (isset($_REQUEST['name']) ) {
+            $name = $_REQUEST['name'];
+        } else {
+            $name = '';
+        }
+        
+        $categories = array();
+        if (isset($_REQUEST['categories'])) {
+            foreach ($_REQUEST['categories'] as $category) {
+                $tmp = filter_var($category, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+                if (isset($tmp)) {
+                    $categories[] = $tmp;
+                } else {
+                    $errors[] = "$category: categoria non valida";
+                }
+            }
+        }
+        
+        $hosts = array();
+        if (isset($_REQUEST['hosts'])) {
+            foreach ($_REQUEST['hosts'] as $host) {
+                $tmp = filter_var($host, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
+                if (isset($tmp)) {
+                    $host[] = $tmp;
+                } else {
+                    $errors[] = "$host: host non valida";
+                }
+            }
+        }
+ 
+        
+        return CourseFactory::filter($name, $categories, $hosts);               
     }
 }

@@ -171,5 +171,64 @@ class CourseFactory {
         $db->close();
         return false;
     }
+    
+    private static function buildOrCondition($length, $field) {
+        if ($length > 0) {
+            $condition = "";
+            for ($i = 0; $i < $length - 1; $i++) {
+                $condition .= "$field = ? OR ";
+            }
+            $condition .= "$field = ?";
+            return $condition;
+        }
+        
+        return null;
+    }
+    
+    private static function buildBindString($length) {
+        $string = "";
+        if ($length > 0) {
+            for ($i = 0; $i < $length; $i++) {
+                $string .= 'i';
+            }
+        }
+        return $string;
+    }
+    
+    public static function filter($name, &$categories, &$hosts) {
+        $categoriesCondition = self::buildOrCondition(count($categories), "category_id");
+        $hostsCondition = self::buildOrCondition(count($hosts), "host_id");
+        $query = "select * from courses where name like ?";
+        
+        if (isset($categoriesCondition)) {
+            $query .= " AND ($categoriesCondition)";
+        }
+        
+        if (isset($hostsCondition)) {
+            $query .= " AND ($hostsCondition)";
+        }
+        
+        $bindString = "s" . self::buildBindString(count($categories)) . self::buildBindString(count($hosts));
+        
+   
+        $args = array_merge(array($bindString, "%$name%"), $categories, $hosts);
+        
+        $db = new Database();
+        $db->connect();
+        $db->prepare($query);
+        
+        call_user_func_array(array($db, 'bind'), $args);
+        
+        while ($row = $db->fetch()) {
+            $courses[] = self::getCourseFromArray($row);
+        }
+        $db->close();
+        if (!$db->error()) {
+            return $courses;
+        } else {
+            return null;
+        }
+        
+    }
 }
 

@@ -6,15 +6,15 @@ $categories = CategoryFactory::getCategories();
 $hosts = HostFactory::getHosts();
 ?>
 <h2>Cerca</h2>
-<form method="post" action="learner/filter">
+<form method="post">
     <label for="name">Nome</label>
     <input name="name" id="name" type="text">
     <h3>Categoria</h3>
-    <p>
+    <p id="categories">
         <?php
         foreach($categories as $category)  {
             ?>
-            <input type="checkbox" name="category">
+            <input type="checkbox" name="categories" value="<?=$category->getId()?>">
             <?= $category->getName(); ?>
             <br/>
             <?php
@@ -22,16 +22,17 @@ $hosts = HostFactory::getHosts();
         ?>  
     </p>
     <h3>Host</h3>
-    <p>
+    <p id="hosts">
         <?php
         foreach($hosts as $host)  {
             ?>
-            <input type="checkbox" name="category">
+            <input type="checkbox" name="hosts" value="<?=$host->getId()?>">
             <?= $host->getName(); ?>
             <br/>
             <?php
         }
         ?>  
     </p>
-    <button type="submit" name="cmd" value="filter">Cerca</button>
+    <ul id="courses-list" class="courses"></ul>
+    <button id="filter" type="submit" name="cmd" value="filter">Cerca</button>
 </form>

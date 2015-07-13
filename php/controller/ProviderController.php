@@ -60,36 +60,53 @@ class ProviderController extends BaseController {
     
     private function getCourse() {
         $course = new Course();
+        $valid = array(
+            "name" => false,
+            "link" => false,
+            "category" => false
+        );
         
-        if (isset($_REQUEST['name'])) {
-            if (!$course->setName($_REQUEST['name'])) {
-                $this->vd->addErrorMessage('name', "Nome non valido");
-            }
+        if ( isset($_REQUEST['name']) ) {
+           if ($course->setName($_REQUEST['name'])) {
+                $valid['name'] = true;
+           }
         }
         
         if (isset($_REQUEST['link'])) {
-            if (!$course->setLink($_REQUEST['link'])) {
-                $this->vd->addErrorMessage('link', "Link non valido");
+            if ($course->setLink($_REQUEST['link'])) {
+                $valid['link'] = true;
             }
         }
         
         if (isset($_REQUEST['category'])) {
             $category = CategoryFactory::getCategoryById($_REQUEST['category']);
             if (isset($category)) {
+                $valid['category'] = true;
                 $course->setCategory($category);
-            } else {
-                $this->vd->addErrorMessage('category', "Categoria non valida");
             }
         }
         
-        if (count($this->vd->getErrorMessages()) == 0) {
+        if ($valid['name'] && $valid['link'] && $valid['category']) {
             $host = HostFactory::getHostByLink($_REQUEST['link']);
             $course->setHost($host);
             
             $course->setOwner(UserFactory::getUserById($_SESSION[BaseController::User]));
             
             return $course;
+                    
         } else {
+            if (!$valid['name']) {
+                $this->vd->addErrorMessage('name', 'Nome non valido');
+            }
+
+            if (!$valid['link']) {
+                $this->vd->addErrorMessage('link', 'Link non valido');
+            }
+
+            if (!$valid['category']) {
+                $this->vd->addErrorMessage('category', 'Categoria non valida');
+            }
+            
             return null;
         }   
     }

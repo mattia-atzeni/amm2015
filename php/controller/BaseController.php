@@ -31,7 +31,14 @@ class BaseController {
             }
         }
         
-        $this->showPage();
+        if ($this->loggedIn()) {
+            $user = UserFactory::getUserById($_SESSION[self::User]);
+        }
+        
+        $this->preparePage();
+        $vd = $this->vd;
+        
+        require "php/view/master.php";
     }
 
     protected function login($username, $password) {
@@ -60,10 +67,9 @@ class BaseController {
         return isset($_SESSION) && array_key_exists(self::User, $_SESSION);
     }
     
-    protected function showPage() {
+    protected function preparePage() {
 
         if ($this->loggedIn()) {
-            $user = UserFactory::getUserById($_SESSION[self::User]);
             switch ($_SESSION[self::Role]) {
                 case User::Learner:
                     $this->vd->setPage("learner");
@@ -77,10 +83,6 @@ class BaseController {
         $path = "php/view/" . $this->vd->getPage();
         $this->vd->setContent($path . "/content.php");
         $this->vd->setNavigationBar($path . "/navigationBar.php");
-        
-        $vd = $this->vd;
-        
-        require "php/view/master.php";
     }
 
 }

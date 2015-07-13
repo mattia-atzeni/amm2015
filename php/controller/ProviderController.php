@@ -12,24 +12,30 @@ class ProviderController extends BaseController {
     }
     
     public function handleInput() {
-        $this->vd->setPage("provider");
-        $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
-        
-        if (isset($subpage)) {
-            $this->vd->setSubpage($subpage);
-        }
-        
-        $cmd = isset($_REQUEST['cmd']) ? $_REQUEST['cmd'] : null;
-        
-        if (isset($cmd)) {
-            switch ($cmd) {
-                case "save_course": $this->handleSaveCourseCmd(); break;
-                case "remove":      $this->handleRemoveCmd(); break;
-                case "cancel":      $this->vd->setSubpage("home"); break;
+        if ($this->loggedIn()) {
+            $this->vd->setPage("provider");
+            $user = UserFactory::getUserById($_SESSION[BaseController::User]);
+            $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
+
+            if (isset($subpage)) {
+                $this->vd->setSubpage($subpage);
             }
+
+            $cmd = isset($_REQUEST['cmd']) ? $_REQUEST['cmd'] : null;
+
+            if (isset($cmd)) {
+                switch ($cmd) {
+                    case "save_course": $this->handleSaveCourseCmd(); break;
+                    case "remove":      $this->handleRemoveCmd(); break;
+                    case "cancel":      $this->vd->setSubpage("home"); break;
+                }
+            }
+
+            $this->preparePage();
+            $vd = $this->vd;
+            
+            require "php/view/master.php";
         }
-        
-        $this->showPage();
     }
     
     private function handleSaveCourseCmd() {

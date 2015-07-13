@@ -8,10 +8,12 @@ class ViewDescriptor {
     private $subpage;
     private $page;
     private $scripts;
+    private $isJson;
 
     public function __construct() {
         $this->errorMessages = array();
         $this->scripts = array();
+        $isJson = false;
     }
     
     public function getTitle() {
@@ -38,8 +40,12 @@ class ViewDescriptor {
         return $this->page;
     }
     
-    public function getScripts() {
+    public function &getScripts() {
         return $this->scripts;
+    }
+    
+    public function isJson() {
+        return $this->isJson;
     }
 
     public function setTitle($title) {
@@ -68,5 +74,9 @@ class ViewDescriptor {
     
     public function addScript($script) {
         $this->scripts[] = $script;
+    }
+    
+    public function toggleJson() {
+        $this->isJson = true;
     }
 }

@@ -16,6 +16,7 @@ class LearnerController extends BaseController {
         $this->vd->setPage("learner");
         
         if ($this->loggedIn()) {
+            $user = UserFactory::getUserById($_SESSION[BaseController::User]);
             $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
 
             if (isset($subpage)) {
@@ -31,17 +32,17 @@ class LearnerController extends BaseController {
 
             if (isset($cmd)) {
                 switch ($cmd) {
-                    case "join": $this->handleJoinCmd(); break;
+                    case "join":    $this->handleJoinCmd(); break;
                     case "uneroll": $this->handleUnerollCmd(); break;
-                    case "filter": $courses = $this->handleFilterCmd();
-                                    require 'php/view/learner/courses_filter_json.php';
-                                    return;
+                    case "filter":  $courses = $this->handleFilterCmd(); break;
                         
                 }
             }
         }
         
-        $this->showPage();
+        $this->preparePage();
+        $vd = $this->vd;
+        require "php/view/master.php";
     }
     
     private function handleJoinCmd() {
@@ -101,13 +102,15 @@ class LearnerController extends BaseController {
             foreach ($_REQUEST['hosts'] as $host) {
                 $tmp = filter_var($host, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
                 if (isset($tmp)) {
-                    $host[] = $tmp;
+                    $hosts[] = $tmp;
                 } else {
-                    $errors[] = "$host: host non valida";
+                    $errors[] = "$host: host non valido";
                 }
             }
         }
- 
+        
+        $this->vd->setSubpage('courses_filter_json');
+        $this->vd->toggleJson();
         
         return CourseFactory::filter($name, $categories, $hosts);               
     }

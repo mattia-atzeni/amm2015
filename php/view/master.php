@@ -50,38 +50,39 @@ if (!$vd->isJson()) {
                         </ul>
                 </div>
                 <div id="content">
-                    <?php
-                    if (count($vd->getErrorMessages()) != 0) {
-                        ?>
-                        <div class="error">
-                            <ul>
-                            <?php
-                            $errors = $vd->getErrorMessages();
-                            foreach ($errors as $error) {
-                                ?>
-                                <li><?=$error?></li>
-                                <?php
-                            }
-                            ?>
-                            </ul>
-                        </div>
                         <?php
-                    }
-                    ?>
-                    <?php
-                    $content = $vd->getContent();
-                    if (isset($content)) {
-                        require "$content";
-                    }
-                    ?>
-                </div>
-                <div class="clear"></div>
-                <footer>
-                    <p>
-                        Progetto di Amministrazione di Sistema 2015<br/>
-                        Autore: Mattia Atzeni - Matricola: 48958
-                    </p>
-                </footer>
+                        if (count($vd->getErrorMessages()) != 0) {
+                            ?>
+                            <div class="error">
+                                <ul>
+                                <?php
+                                $errors = $vd->getErrorMessages();
+                                foreach ($errors as $error) {
+                                    ?>
+                                    <li><?=$error?></li>
+                                    <?php
+                                }
+                                ?>
+                                </ul>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                        <?php
+                        $content = $vd->getContent();
+                        if (isset($content)) {
+                            require "$content";
+                        }
+                        ?>
+                    </div>
+                <div id="af" class="clear"></div>
+            </div>                
+            <footer>
+                <p>
+                    Progetto di Amministrazione di Sistema 2015<br/>
+                    Autore: Mattia Atzeni - Matricola: 48958
+                </p>
+            </footer>
             </div>
         </body>
     </html>

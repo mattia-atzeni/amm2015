@@ -17,7 +17,7 @@
         <?php } ?>
     </select>
     <br/>
-    <button name="cmd" value="cancel">Annulla</button>
-    <button type="submit" name="cmd" value="save_course">OK</button>
+    <button id="cancel_button" name="cmd" value="cancel">Annulla</button>
+    <button id="save_course_button" type="submit" name="cmd" value="save_course">OK</button>
 </form>
 

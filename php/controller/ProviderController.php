@@ -30,6 +30,10 @@ class ProviderController extends BaseController {
                     case "cancel":      $this->vd->setSubpage("home"); break;
                 }
             }
+            
+            if ($subpage == "home") {
+                $this->vd->addScript("js/new_course_form.js");
+            }
 
             $this->preparePage();
             $vd = $this->vd;
@@ -48,7 +52,6 @@ class ProviderController extends BaseController {
                 $this->vd->addErrorMessage("dberror", "Impossibile salvare il corso");
             }
         }
-        $this->vd->setSubpage("new_course");
     }
     
     private function handleRemoveCmd() {

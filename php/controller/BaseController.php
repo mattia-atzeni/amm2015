@@ -76,6 +76,8 @@ class BaseController {
                     break;
                 case User::Provider:
                     $this->vd->setPage("provider");
+                    $this->vd->addScript("js/jquery-2.1.1.min.js");
+                    $this->vd->addScript("js/new_course_form.js");
                     break;
             }
         }

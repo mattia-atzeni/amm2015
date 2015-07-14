@@ -21,60 +21,49 @@ if (!$vd->isJson()) {
         </head>
 
         <body>
+            <nav>
+                <ul>
+                    <li><a href="login" class="logo"><img src="images/mooc.png" alt="mooc"></a></li>
+                    <?php
+                    if ($vd->getNavigationBar() != null) {
+                        $bar = $vd->getNavigationBar();
+                        require "$bar";
+                    }
+                    ?>
+                </ul>
+            </nav>
             <div id="page">
-                <nav>
-                    <ul>
-                        <li><a href="login" class="logo"><img src="images/mooc.png" alt="mooc"></a></li>
-                        <?php
-                        if ($vd->getNavigationBar() != null) {
-                            $bar = $vd->getNavigationBar();
-                            require "$bar";
-                        }
-                        ?>
-                    </ul>
-                </nav>
-                <br/>
-                <div id="sidebar1">
-                    <?php $hosts = HostFactory::getHosts(5); ?>
-                    <ul class="hosts">
-                        <li>
-                            Link Esterni
-                            <ul>
-                                <?php
-                                foreach ($hosts as $host) {
-                                    ?>
-                                    <li>
-                                        <a href="<?=$host->getLink()?>" target="_blank">
-                                           <?=$host->getName()?>
-                                        </a>
-                                    </li>
-                                    <?php
-                                }
+                <div id="sidebar">
+                    <?php $hosts = HostFactory::getHosts(); ?>
+                        <ul>
+                            <?php
+                            foreach ($hosts as $host) {
                                 ?>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div id ="sidebar2">
-
+                                <li>
+                                    <a href="<?=$host->getLink()?>" target="_blank" class="<?=$host->getName()?> host">
+                                        <p><?=$host->getName()?></p>
+                                    </a>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                        </ul>
                 </div>
                 <div id="content">
                     <?php
                     if (count($vd->getErrorMessages()) != 0) {
                         ?>
                         <div class="error">
-                            <div>
-                                <ul>
-                                <?php
-                                $errors = $vd->getErrorMessages();
-                                foreach ($errors as $error) {
-                                    ?>
-                                    <li><?=$error?></li>
-                                    <?php
-                                }
+                            <ul>
+                            <?php
+                            $errors = $vd->getErrorMessages();
+                            foreach ($errors as $error) {
                                 ?>
-                                </ul>
-                            </div>
+                                <li><?=$error?></li>
+                                <?php
+                            }
+                            ?>
+                            </ul>
                         </div>
                         <?php
                     }
@@ -93,10 +82,11 @@ if (!$vd->isJson()) {
                         Autore: Mattia Atzeni - Matricola: 48958
                     </p>
                 </footer>
-            </body>
-        </div>
+            </div>
+        </body>
     </html>
     <?php
+    
 } else {
     
     header('Cache-Control: no-cache, must-revalidate');

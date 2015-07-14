@@ -4,20 +4,40 @@
 
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin: auto;
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
     padding: 0;
     margin: 0;
     color: #454545;
+}
+
+a {
+    text-decoration: none;
+}
+
+#page {
+    position: relative;
+    min-width: 900px;
+    min-height: 700px;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #f9f9f9;
+    border-left: 1px solid #959595;
+    border-right: 1px solid #959595;
+    box-shadow: 0px 0px 5px rgba(45, 45, 45, 0.2);
 }
 
 /* Barra di Navigazione */
 
 nav ul {
     position: relative;
+    top: 0;
+    left: 0;
     text-align: right;
     list-style-type: none;
     background: #494949;
+    width: 100%;
+    z-index: 10;
     min-width: 640px;
     margin: 0;
     padding: 0;
@@ -42,7 +62,6 @@ nav ul img {
 .navbar-item {
     display: inline-block;
     padding: 10px 30px 10px 30px;
-    text-decoration: none;
     color: white;
     position: relative;
     right: 64px;
@@ -114,15 +133,60 @@ nav li a:hover {
     background: -webkit-linear-gradient(#2296ff, #72c1FF);
 }
 
-#sidebar1 {
-    float: left;
-    width: 20%;
-    padding-top: 5%;
-    margin-left: 10%;
+#sidebar {
+    height: 370px;
+    background-color: #454545;
+    position: fixed;
+    top: 50%;
+    margin-top: -185px;
+    border: 1px solid #a2a2a2;
+    border-left: none;
+    box-shadow: 0px 0px 5px rgba(45, 45, 45, 0.4);
+    border-top-right-radius: 32px;
+    border-bottom-right-radius: 32px;
 }
 
-#sidebar1 ul {
+#sidebar ul {
     list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#sidebar .host {
+    display: block;
+    width: 64px;
+    height: 64px;
+    background-size: 64px 64px;
+    border-radius: 28px;
+    margin: 8px;
+}
+
+#sidebar .host:hover {
+    box-shadow: 0px 0px 5px rgba(131, 255, 237, 0.52);
+}
+
+#sidebar .coursera {
+    background-image: url(../images/coursera.jpg);
+}
+
+#sidebar .edX {
+    background-image: url(../images/edX.jpg);
+}
+
+#sidebar .pluralsight {
+    background-image: url(../images/pluralsight.jpg);
+}
+
+#sidebar .digital-tutors {
+    background-image: url(../images/digital-tutors.jpg);
+}
+
+#sidebar .udacity {
+    background-image: url(../images/udacity.jpg);
+}
+
+#sidebar .host p {
+    display: none;
 }
 
 footer {
@@ -131,16 +195,11 @@ footer {
     width: 100%;
     padding: 1em;
     border-top: 1px solid #454545;
+    z-index: 0;
 }
 
 #content {
-    /*border: 1px solid black;
-    position: absolute;
-    left: 50%;
-    margin-left: -450px;
-    width: 900px; 
-    padding: 32px;*/
-    float: left;
+    padding: 32px 128px 32px 192px;
 }
 
 .courses {
@@ -156,6 +215,7 @@ footer {
     margin-top: 32px;
     margin-bottom: 32px;
     min-width: 520px;
+    width: 100%;
     background-size: 128px 128px;
     background-repeat: no-repeat;
 }
@@ -166,7 +226,6 @@ footer {
 
 .courses .course {
     display: block;
-    text-decoration: none;
     height: 128px;
     padding: 32px 10px 32px 160px;
     line-height: 32px;
@@ -211,24 +270,26 @@ footer {
     background-image: url(../images/mooc.jpg);
 }
 
-.course-button {
-    position: relative;
-    text-decoration: none;
-    bottom: 48px;
-    right: 20px;
+.button {
     display: block;
-    float: right;
     background-color: #2276d3;
     border-radius: 4px;
     border: 1px solid #3087b2;
     padding: 0.5em 1em 0.5em 1em;
     color: white;
-    z-index: 1;
 }
 
 
-.course-button:hover {
+.button:hover {
     background-color: #1263d3;
+}
+
+.course-button {
+    float: right;
+    position: relative;
+    bottom: 48px;
+    right: 20px;
+    z-index: 1;
 }
 
 .clear {

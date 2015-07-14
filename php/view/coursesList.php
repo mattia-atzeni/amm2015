@@ -14,7 +14,7 @@
                         <form action="learner" method="post">
                             <input type="hidden" name="cmd" value="join">
                             <input type="hidden" name="course_id" value="<?=$course->getId()?>">
-                            <button class="course-button" type="submit">Iscriviti</button>
+                            <button class="course-button button" type="submit">Iscriviti</button>
                         </form>
                         <?php
                         break;
@@ -25,7 +25,7 @@
                                 <form action="learner" method="post">
                                     <input type="hidden" name="cmd" value="uneroll">
                                     <input type="hidden" name="course_id" value="<?=$course->getId()?>">
-                                    <button class="course-button" type="submit">Abbandona</button>
+                                    <button class="course-button button" type="submit">Abbandona</button>
                                 </form>
                                 <?php
                                 break;
@@ -34,7 +34,7 @@
                                 <form action="provider" method="post">
                                     <input type="hidden" name="cmd" value="remove">
                                     <input type="hidden" name="course_id" value="<?=$course->getId()?>">
-                                    <button class="course-button" type="submit">Rimuovi</button>
+                                    <button class="course-button button" type="submit">Rimuovi</button>
                                 </form>
                                 <?php
                         }

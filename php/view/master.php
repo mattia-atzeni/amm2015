@@ -1,6 +1,5 @@
 <?php
 include_once 'ViewDescriptor.php';
-include_once 'php/model/HostFactory.php';
 
 if (!$vd->isJson()) {
     ?>
@@ -35,7 +34,6 @@ if (!$vd->isJson()) {
             </nav>
             <div id="page">
                 <div id="sidebar">
-                    <?php $hosts = HostFactory::getHosts(); ?>
                         <ul>
                             <?php
                             foreach ($hosts as $host) {

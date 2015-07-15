@@ -15,16 +15,6 @@ class LearnerController extends BaseController {
     public function handleInput() {        
         if ($this->loggedIn()) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
-            $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
-
-            if (isset($subpage)) {
-                $this->vd->setSubpage($subpage);
-                switch($subpage) {
-                    case "filter":  $this->vd->addScript("js/jquery-2.1.1.min.js");
-                                    $this->vd->addScript("js/filter.js");
-                                    break;
-                }
-            }
             
             if (isset($_REQUEST['cmd'])) {
                 switch ($_REQUEST['cmd']) {
@@ -34,10 +24,28 @@ class LearnerController extends BaseController {
                         
                 }
             }
+            
+            $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
+
+            if (isset($subpage)) {
+                $this->vd->setSubpage($subpage);
+                switch ($subpage) {
+                    case "home":    $courses = CourseFactory::getCoursesByLearnerId($user->getId()); break;
+                    case "catalog": $courses = CourseFactory::getCourses(); break;
+                    case "filter":  $this->vd->addScript("js/jquery-2.1.1.min.js");
+                                    $this->vd->addScript("js/filter.js");
+                                    $categories = CategoryFactory::getCategories();
+                                    if ($this->vd->isJson()) {
+                                        $this->vd->setSubpage('courses_filter_json');
+                                    }
+                                    break;
+                }
+            }
         }
         
-        $this->preparePage();
+        $hosts = HostFactory::getHosts(5);
         $vd = $this->vd;
+        $this->preparePage($user);
         require "php/view/master.php";
     }
     
@@ -106,7 +114,6 @@ class LearnerController extends BaseController {
             }
         }
         
-        $this->vd->setSubpage('courses_filter_json');
         $this->vd->toggleJson();
         
         return CourseFactory::filter($name, $categories, $hosts);               

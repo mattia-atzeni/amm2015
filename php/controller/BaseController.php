@@ -3,6 +3,10 @@
 include_once 'php/model/UserFactory.php';
 include_once 'php/view/ViewDescriptor.php';
 include_once 'php/model/User.php';
+include_once 'php/model/CourseFactory.php';
+include_once 'php/model/HostFactory.php';
+include_once 'php/model/CategoryFactory.php';
+
 
 class BaseController {
 
@@ -30,14 +34,14 @@ class BaseController {
             }
         }
         
+        $user = null;
         if ($this->loggedIn()) {
             $user = UserFactory::getUserById($_SESSION[self::User]);
         }
         
-        $this->preparePage();
-        $vd = $this->vd;
+        $this->preparePage($user);
+        $this->showPage($user);
         
-        require "php/view/master.php";
     }
 
     protected function login($username, $password) {
@@ -66,27 +70,56 @@ class BaseController {
         return isset($_SESSION) && array_key_exists(self::User, $_SESSION);
     }
     
-    protected function preparePage() {
-
-        if ($this->loggedIn()) {
-            $user = UserFactory::getUserById($_SESSION[BaseController::User]);
-            switch ($_SESSION[self::Role]) {
+    private function showProviderPage($user) {
+        $courses = CourseFactory::getCoursesByOwnerId($user->getId());
+        $categories = CategoryFactory::getCategories();
+        $vd = $this->vd;
+        $hosts = HostFactory::getHosts(5);
+        require 'php/view/master.php';
+    }
+    
+    private function showLearnerPage($user) {
+        $courses = CourseFactory::getCoursesByLearnerId($user->getId());  
+        $vd = $this->vd;
+        $hosts = HostFactory::getHosts(5);
+        require 'php/view/master.php';
+    }
+    
+    protected function preparePage($user) {
+        if (isset($user)) {
+            switch ($user->getRole()) {
                 case User::Learner:
                     $this->vd->setPage("learner");
                     $this->vd->setNavigationBar('php/view/learner/navigationBar.php');
-                    break;
+                    $this->vd->setContent('php/view/learner/content.php');
+                    return;
                 case User::Provider:
                     $this->vd->setPage("provider");
                     $this->vd->addScript("js/jquery-2.1.1.min.js");
                     $this->vd->addScript("js/new_course_form.js");
                     $this->vd->setNavigationBar('php/view/provider/navigationBar.php');
-                    break;
+                    $this->vd->setContent('php/view/provider/content.php');
+                    return;
             }
         } else {
-            $this->vd->setPage("login");
-        }
-        
-        $path = "php/view/" . $this->vd->getPage();
-        $this->vd->setContent($path . "/content.php");     
+            $this->vd->setContent("php/view/login/content.php");
+        } 
+    }
+    
+    private function showPage($user) {
+        if (isset($user)) {
+            switch ($user->getRole()) {
+                case User::Learner:
+                    $this->showLearnerPage($user);
+                    return;
+                case User::Provider:
+                    $this->showProviderPage($user);
+                    return;
+            }
+         } else {
+             $vd = $this->vd;
+             $hosts = HostFactory::getHosts(5);
+             require "php/view/master.php";
+         }
     }
 }

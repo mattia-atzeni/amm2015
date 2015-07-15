@@ -1,10 +1,3 @@
-<?php
-include_once 'php/model/CategoryFactory.php';
-include_once 'php/model/HostFactory.php';
-
-$categories = CategoryFactory::getCategories();
-$hosts = HostFactory::getHosts();
-?>
 <h2>Cerca</h2>
 
 <div class="error">

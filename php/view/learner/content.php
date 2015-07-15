@@ -1,5 +1,4 @@
 <?php
-    include_once 'php/model/CourseFactory.php';
 
     if ($vd->getSubpage() != null && $vd->getSubpage() != "home") {
         include $vd->getSubpage() . ".php";
@@ -8,7 +7,6 @@
         ?>
         <h2>Ciao, <?=$user->getFirstName()?>!</h2>
         <?php
-            $courses = CourseFactory::getCoursesByLearnerId($user->getId());
             if (count($courses) > 0) {
                 ?>
                 <h3>I tuoi corsi</h3>

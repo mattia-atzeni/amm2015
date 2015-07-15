@@ -23,7 +23,10 @@ class ProviderController extends BaseController {
             }
 
             $this->preparePage();
-            $vd = $this->vd;           
+            $vd = $this->vd;   
+            $courses = CourseFactory::getCoursesByOwnerId($user->getId());
+            $hosts = HostFactory::getHosts(5);
+            $categories = CategoryFactory::getCategories();
             require "php/view/master.php";
         }
     }

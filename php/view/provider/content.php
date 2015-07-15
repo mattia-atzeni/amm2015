@@ -1,9 +1,5 @@
-<?php
-include_once 'php/model/CourseFactory.php';
-?>
 <h2>Ciao, <?=$user->getFirstName()?>!</h2>
 <?php
-$courses = CourseFactory::getCoursesByOwnerId($user->getId());
 if (count($courses) > 0) {
     ?>
     <h3>I tuoi corsi</h3>
@@ -17,10 +13,6 @@ if (count($courses) > 0) {
 ?>
 <a id="new_course_button" href="provider/new_course" class="button action" id="new_course">Nuovo Corso</a>
 
-<?php
-    include_once "php/model/CategoryFactory.php";
-    $categories = CategoryFactory::getCategories();
-?>
 <div id="new_course_form">
     <form method="post" action="provider">
         <label for="name">Nome del corso</label>

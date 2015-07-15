@@ -1,13 +1,13 @@
 $(document).ready( function() {
                 
-    $("#courses-list").hide();
+    $("#filtered-courses-list").hide();
     $(".error").hide();
     $("#none").hide();
     
     $('#filter').click( function(event) {
         event.preventDefault();
          
-        $("#courses-list").empty();
+        $("#filtered-courses-list").empty();
         $(".error").empty();
         
         var _name = $('#name').val();
@@ -38,7 +38,7 @@ $(document).ready( function() {
                         $('#none').hide();
                         for (var key in data['courses']) {
                             var course = data['courses'][key];
-                            $("#courses-list").append(
+                            $("#filtered-courses-list").append(
                                  "<li class=\""+ course['host_name'] + "\">\n\
                                      <a class=\"course\" href=\"" + course['link'] + "\" target=\"_blank\">\n\
                                          <h4 class=\"name\">" + course['name'] + "</h4>\n\
@@ -51,7 +51,7 @@ $(document).ready( function() {
                                      </form>\n\
                                  </li>");
                         }
-                        $('#courses-list').show();
+                        $('#filtered-courses-list').show();
                     } else {
                         $('#none').show();
                     }

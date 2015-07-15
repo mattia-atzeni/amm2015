@@ -11,34 +11,40 @@ $hosts = HostFactory::getHosts();
     <ul></ul>
 </div>
 
-<form method="post" class="fixed">
+<form id="filter-form" method="post">
     <label for="name">Nome</label>
     <input name="name" id="name" type="text">
-    <h3>Categoria</h3>
-    <p id="categories">
-        <?php
-        foreach($categories as $category)  {
-            ?>
-            <input type="checkbox" name="categories" value="<?=$category->getId()?>">
-            <?= $category->getName(); ?>
-            <br/>
+    <br/>
+    <div id="categories">
+        <h3>Categoria</h3>
+        <p>
             <?php
-        }
-        ?>  
-    </p>
-    <h3>Host</h3>
-    <p id="hosts">
-        <?php
-        foreach($hosts as $host)  {
-            ?>
-            <input type="checkbox" name="hosts" value="<?=$host->getId()?>">
-            <?= $host->getName(); ?>
-            <br/>
+            foreach($categories as $category)  {
+                ?>
+                <input type="checkbox" name="categories" value="<?=$category->getId()?>">
+                <?= $category->getName(); ?>
+                <br/>
+                <?php
+            }
+            ?>  
+        </p>
+    </div>
+    <div id="hosts">
+        <h3>Host</h3>
+        <p>
             <?php
-        }
-        ?>  
-    </p>
+            foreach($hosts as $host)  {
+                ?>
+                <input type="checkbox" name="hosts" value="<?=$host->getId()?>">
+                <?= $host->getName(); ?>
+                <br/>
+                <?php
+            }
+            ?>  
+        </p>
+    </div>
+    <div class="clear"></div>
     <button id="filter" type="submit" name="cmd" value="filter">Cerca</button>
 </form>
 <p id='none'>Nessun corso trovato<p/>
-<ul id="courses-list" class="courses" class="left"></ul>
+<ul id="filtered-courses-list" class="courses" class="left"></ul>

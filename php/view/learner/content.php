@@ -9,10 +9,19 @@
         <h2>Ciao, <?=$user->getFirstName()?>!</h2>
         <?php
             $courses = CourseFactory::getCoursesByLearnerId($user->getId());
-            require 'php/view/coursesList.php';
+            if (count($courses) > 0) {
+                ?>
+                <h3>I tuoi corsi</h3>
+                <?php
+                require 'php/view/coursesList.php';
+            } else {
+                ?>
+                <p class="no-courses">Non sei iscritto ad alcun corso</p>
+                <?php
+            }
         ?>
-        <a href="learner/catalog">Catalogo</a>
-        <a href="learner/filter">Cerca</a>
+        <a class="button action" href="learner/catalog">Catalogo</a>
+        <a class="button action" href="learner/filter">Cerca</a>
         <?php
     }
 ?>

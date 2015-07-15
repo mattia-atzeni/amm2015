@@ -7,12 +7,20 @@ if ($vd->getSubpage() != null && $vd->getSubpage() != "home") {
 else {   
     ?>
     <h2>Ciao, <?=$user->getFirstName()?>!</h2>
-     <h3>I tuoi corsi</h3>
     <?php
     $courses = CourseFactory::getCoursesByOwnerId($user->getId());
-    require 'php/view/coursesList.php';
+    if (count($courses) > 0) {
+        ?>
+        <h3>I tuoi corsi</h3>
+        <?php
+        require 'php/view/coursesList.php';
+    } else {
+        ?>
+        <p class="no-courses">Non hai inserito alcun corso</p>
+        <?php
+    }
     ?>
-    <a id="new_course_button" href="provider/new_course" class="button" id="new_course">Nuovo Corso</a>
+    <a id="new_course_button" href="provider/new_course" class="button action" id="new_course">Nuovo Corso</a>
     <?php
 }
 ?>

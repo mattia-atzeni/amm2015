@@ -12,9 +12,7 @@ class LearnerController extends BaseController {
         parent::__construct();
     }
     
-    public function handleInput() {
-        $this->vd->setPage("learner");
-        
+    public function handleInput() {        
         if ($this->loggedIn()) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
             $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
@@ -27,11 +25,9 @@ class LearnerController extends BaseController {
                                     break;
                 }
             }
-
-            $cmd = isset($_REQUEST['cmd']) ? $_REQUEST['cmd'] : null;
-
-            if (isset($cmd)) {
-                switch ($cmd) {
+            
+            if (isset($_REQUEST['cmd'])) {
+                switch ($_REQUEST['cmd']) {
                     case "join":    $this->handleJoinCmd(); break;
                     case "uneroll": $this->handleUnerollCmd(); break;
                     case "filter":  $courses = $this->handleFilterCmd(); break;

@@ -70,7 +70,7 @@ class HostFactory {
         return $host;
     }
     
-    public static function getHosts($limit=null) {
+    public static function &getHosts($limit=null) {
         $hosts = array();
         $db = new Database();
         $db->connect();

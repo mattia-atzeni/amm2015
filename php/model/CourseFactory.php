@@ -44,8 +44,7 @@ class CourseFactory {
         return !$db->error();       
     }
     
-    public static function getCoursesByOwnerId($owner_id) {
-        
+    public static function &getCoursesByOwnerId($owner_id) {      
         $courses = array();
         $query = "select * from courses where owner_id = ?";
         $db = new Database();
@@ -57,14 +56,10 @@ class CourseFactory {
             $courses[] = self::getCourseFromArray($row);
         }
         $db->close();
-        if (!$db->error()) {
-            return $courses;
-        } else {
-            return null;
-        }
+        return $courses;
     }
     
-    public static function getCourses() {
+    public static function &getCourses() {
         $courses = array();
         $db = new Database();
         $db->connect();
@@ -123,7 +118,7 @@ class CourseFactory {
         return !$db->error();
     }
     
-    public static function getCoursesByLearnerId($id) {
+    public static function &getCoursesByLearnerId($id) {
         $courses = array();
         $query = "select courses.id, courses.name, courses.link, courses.category_id, courses.host_id, courses.owner_id "
                 . "from courses_learners "
@@ -140,11 +135,7 @@ class CourseFactory {
             $courses[] = self::getCourseFromArray($row);
         }
         $db->close();
-        if (!$db->error()) {
-            return $courses;
-        } else {
-            return null;
-        }
+        return $courses;
     }
     
     public static function removeCourseById($id) {
@@ -223,12 +214,7 @@ class CourseFactory {
             $courses[] = self::getCourseFromArray($row);
         }
         $db->close();
-        if (!$db->error()) {
-            return $courses;
-        } else {
-            return null;
-        }
-        
+        return $courses;
     }
 }
 

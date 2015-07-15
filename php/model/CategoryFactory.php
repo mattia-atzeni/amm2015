@@ -9,7 +9,7 @@ class CategoryFactory {
         
     }
     
-    public static function getCategories() {
+    public static function &getCategories() {
             
         $categories = array();
         $db = new Database();

@@ -1,29 +1,21 @@
 <?php
 include_once 'php/model/CourseFactory.php';
-
-if ($vd->getSubpage() != null && $vd->getSubpage() != "home") {
-    include $vd->getSubpage() . ".php";
-}
-else {   
+?>
+<h2>Ciao, <?=$user->getFirstName()?>!</h2>
+<?php
+$courses = CourseFactory::getCoursesByOwnerId($user->getId());
+if (count($courses) > 0) {
     ?>
-    <h2>Ciao, <?=$user->getFirstName()?>!</h2>
+    <h3>I tuoi corsi</h3>
     <?php
-    $courses = CourseFactory::getCoursesByOwnerId($user->getId());
-    if (count($courses) > 0) {
-        ?>
-        <h3>I tuoi corsi</h3>
-        <?php
-        require 'php/view/coursesList.php';
-    } else {
-        ?>
-        <p class="no-courses">Non hai inserito alcun corso</p>
-        <?php
-    }
+    require 'php/view/coursesList.php';
+} else {
     ?>
-    <a id="new_course_button" href="provider/new_course" class="button action" id="new_course">Nuovo Corso</a>
+    <p class="no-courses">Non hai inserito alcun corso</p>
     <?php
 }
 ?>
+<a id="new_course_button" href="provider/new_course" class="button action" id="new_course">Nuovo Corso</a>
 
 <?php
     include_once "php/model/CategoryFactory.php";

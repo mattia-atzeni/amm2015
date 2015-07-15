@@ -13,31 +13,17 @@ class ProviderController extends BaseController {
     
     public function handleInput() {
         if ($this->loggedIn()) {
-            $this->vd->setPage("provider");
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
-            $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
 
-            if (isset($subpage)) {
-                $this->vd->setSubpage($subpage);
-            }
-
-            $cmd = isset($_REQUEST['cmd']) ? $_REQUEST['cmd'] : null;
-
-            if (isset($cmd)) {
-                switch ($cmd) {
+            if (isset($_REQUEST['cmd'])) {
+                switch ($_REQUEST['cmd']) {
                     case "save_course": $this->handleSaveCourseCmd(); break;
                     case "remove":      $this->handleRemoveCmd(); break;
-                    case "cancel":      $this->vd->setSubpage("home"); break;
                 }
-            }
-            
-            if ($subpage == "home") {
-                $this->vd->addScript("js/new_course_form.js");
             }
 
             $this->preparePage();
-            $vd = $this->vd;
-            
+            $vd = $this->vd;           
             require "php/view/master.php";
         }
     }
@@ -45,10 +31,7 @@ class ProviderController extends BaseController {
     private function handleSaveCourseCmd() {
         $course = $this->getCourse();
         if (isset($course)) {
-            if (CourseFactory::saveCourse($course)) {
-                $this->vd->setSubpage("home");
-                return;
-            } else {
+            if (!CourseFactory::saveCourse($course)) {
                 $this->vd->addErrorMessage("dberror", "Impossibile salvare il corso");
             }
         }
@@ -57,10 +40,8 @@ class ProviderController extends BaseController {
     private function handleRemoveCmd() {
         if (isset($_REQUEST['course_id'])) {
             $course_id = $_REQUEST['course_id'];
-            if (isset($course_id)) {
-                if (CourseFactory::removeCourseById($course_id)) {
-                    return;
-                }
+            if (CourseFactory::removeCourseById($course_id)) {
+                return;
             }
         }
         

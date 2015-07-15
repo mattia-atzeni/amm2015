@@ -176,7 +176,7 @@ nav li a:hover {
 }
 
 #sidebar .coursera {
-    background-image: url(../images/coursera.jpg);
+    background-image: url(../images/coursera_mini.jpg);
 }
 
 #sidebar .edX {
@@ -184,11 +184,11 @@ nav li a:hover {
 }
 
 #sidebar .pluralsight {
-    background-image: url(../images/pluralsight.jpg);
+    background-image: url(../images/pluralsight_mini.jpg);
 }
 
 #sidebar .digital-tutors {
-    background-image: url(../images/digital-tutors.jpg);
+    background-image: url(../images/digital-tutors_mini.jpg);
 }
 
 #sidebar .udacity {

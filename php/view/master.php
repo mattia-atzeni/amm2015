@@ -30,6 +30,7 @@ if (!$vd->isJson()) {
                         require "$bar";
                     }
                     ?>
+                    <li><a class="navbar-item" href="">Info</a></li>
                 </ul>
             </nav>
             <div id="page">
@@ -40,7 +41,7 @@ if (!$vd->isJson()) {
                             foreach ($hosts as $host) {
                                 ?>
                                 <li>
-                                    <a href="<?=$host->getLink()?>" target="_blank" class="<?=$host->getName()?> host">
+                                    <a href="<?=$host->getLink()?>" target="_blank" class="<?=$host->getName()?> host" title="<?=$host->getName()?>">
                                         <p><?=$host->getName()?></p>
                                     </a>
                                 </li>

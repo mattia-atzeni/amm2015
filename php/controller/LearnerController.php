@@ -130,7 +130,6 @@ class LearnerController extends BaseController {
         }
         
         $this->vd->toggleJson();
-        
         return CourseFactory::filter($name, $categories, $hosts);               
     }
 }

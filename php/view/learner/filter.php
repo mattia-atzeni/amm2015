@@ -1,9 +1,5 @@
 <h2>Cerca</h2>
 
-<div class="error">
-    <ul></ul>
-</div>
-
 <form id="filter-form" method="post">
     <label for="name">Nome</label>
     <input name="name" id="name" type="text">
@@ -39,5 +35,10 @@
     <div class="clear"></div>
     <button id="filter" type="submit" name="cmd" value="filter">Cerca</button>
 </form>
+<div class="error">
+    <ul id="error-list">
+        
+    </ul>
+</div>
 <p id='none'>Nessun corso trovato<p/>
 <ul id="filtered-courses-list" class="courses" class="left"></ul>

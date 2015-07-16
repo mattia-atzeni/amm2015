@@ -34,6 +34,7 @@ class BaseController {
                     break;
                 case "logout":
                     $this->logout();
+                    break;
             }
         }
         

@@ -8,7 +8,7 @@ $(document).ready( function() {
         event.preventDefault();
          
         $("#filtered-courses-list").empty();
-        $(".error").empty();
+        $("#error-list").empty();
         
         var _name = $('#name').val();
         var _categories = Array();
@@ -56,8 +56,8 @@ $(document).ready( function() {
                         $('#none').show();
                     }
                 } else {
-                    for(var key in data['errors']){
-                        $(".error ul").append("<li>" + data['errors'][key] + "<\li>");
+                    for (var key in data['errors']) {
+                        $("#error-list").append("<li>" + data['errors'][key] + "</li>");
                     }
                     $(".error").show();
                 }

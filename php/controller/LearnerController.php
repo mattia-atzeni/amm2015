@@ -20,7 +20,7 @@ class LearnerController extends BaseController {
             if (isset($_REQUEST['cmd'])) {
                 switch ($_REQUEST['cmd']) {
                     case "join":    $this->handleJoinCmd(); break;  //comando di iscrizione a un corso
-                    case "uneroll": $this->handleUnerollCmd(); break;   // comando per abbandonare un corso 
+                    case "unenroll": $this->handleUnenrollCmd(); break;   // comando per abbandonare un corso 
                     case "filter":  $courses = $this->handleFilterCmd(); break; // comando per cercare i corsi
                         
                 }
@@ -73,7 +73,7 @@ class LearnerController extends BaseController {
     /**
      * Gestisce la richiesta di abbandonare un corso
      */
-    private function handleUnerollCmd() {
+    private function handleUnenrollCmd() {
         if (isset($_REQUEST['course_id'])) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
             $course = CourseFactory::getCourseById($_REQUEST['course_id']);

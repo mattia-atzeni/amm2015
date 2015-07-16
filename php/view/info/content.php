@@ -3,10 +3,10 @@
     <h2>Descrizione dell'applicazione</h2>
     <p>
         L'applicazione fornisce all'utente un punto unico di accesso a corsi online erogati
-        da siti differenti.
+        da siti differenti, quali coursera, edX, pluralsight, digital-tutors, udacity.
         In particolare, gli amministratori possono creare e rimuovere i corsi, mentre gli utenti
         possono ricercare i corsi a cui sono interessati, iscriversi e abbandonarli.
-        Quando un amministratore rimuove un corso, tale corso non sarà più accessibile neanche agli utenti iscritti.
+        Quando un amministratore rimuove un corso, tale corso non sarà più accessibile neanche agli utenti ad esso iscritti.
         Per ogni corso, l'applicazione tiene traccia dei seguenti attributi:
     </p>
     <ul>

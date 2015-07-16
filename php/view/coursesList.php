@@ -23,7 +23,7 @@
                             case "learner":
                                 ?>
                                 <form action="learner" method="post">
-                                    <input type="hidden" name="cmd" value="uneroll">
+                                    <input type="hidden" name="cmd" value="unenroll">
                                     <input type="hidden" name="course_id" value="<?=$course->getId()?>">
                                     <button class="course-button button" type="submit">Abbandona</button>
                                 </form>

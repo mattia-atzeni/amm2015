@@ -19,9 +19,9 @@ class LearnerController extends BaseController {
             
             if (isset($_REQUEST['cmd'])) {
                 switch ($_REQUEST['cmd']) {
-                    case "join":    $this->handleJoinCmd(); break;
-                    case "uneroll": $this->handleUnerollCmd(); break;
-                    case "filter":  $courses = $this->handleFilterCmd(); break;
+                    case "join":    $this->handleJoinCmd(); break;  //comando di iscrizione a un corso
+                    case "uneroll": $this->handleUnerollCmd(); break;   // comando per abbandonare un corso 
+                    case "filter":  $courses = $this->handleFilterCmd(); break; // comando per cercare i corsi
                         
                 }
             }
@@ -29,7 +29,7 @@ class LearnerController extends BaseController {
             $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
 
             if (isset($subpage)) {
-                $this->vd->setSubpage($subpage);
+                $this->vd->setSubpage($subpage);    // imposta la sottopagina corretta
                 switch ($subpage) {
                     case "home":    $courses = CourseFactory::getCoursesByLearnerId($user->getId()); break;
                     case "catalog": $courses = CourseFactory::getCourses(); break;
@@ -50,6 +50,9 @@ class LearnerController extends BaseController {
         require "php/view/master.php";
     }
     
+    /**
+     * Gestisce la richiesta di iscrizione a un corso
+     */
     private function handleJoinCmd() {
         if (isset($_REQUEST['course_id'])) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
@@ -67,6 +70,9 @@ class LearnerController extends BaseController {
         $this->vd->addErrorMessage("Impossibile completare l'iscrizione al corso");
     }
     
+    /**
+     * Gestisce la richiesta di abbandonare un corso
+     */
     private function handleUnerollCmd() {
         if (isset($_REQUEST['course_id'])) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
@@ -81,6 +87,9 @@ class LearnerController extends BaseController {
         $this->vd->addErrorMessage("Impossibile abbandonare il corso");
     }
     
+    /**
+     * Gestisce la ricerca dei corsi
+     */
     private function &handleFilterCmd() {
         
         if (isset($_REQUEST['name']) ) {
@@ -90,7 +99,7 @@ class LearnerController extends BaseController {
         }
         
         $categories = array();
-        if (isset($_REQUEST['categories'])) {
+        if (isset($_REQUEST['categories']) && is_array($_REQUEST['categories'])) {
             foreach ($_REQUEST['categories'] as $category) {
                 $tmp = filter_var($category, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
                 if (isset($tmp)) {
@@ -103,7 +112,7 @@ class LearnerController extends BaseController {
         }
         
         $hosts = array();
-        if (isset($_REQUEST['hosts'])) {
+        if (isset($_REQUEST['hosts']) && is_array($_REQUEST['hosts'])) {
             foreach ($_REQUEST['hosts'] as $host) {
                 $tmp = filter_var($host, FILTER_VALIDATE_INT, FILTER_NULL_ON_FAILURE);
                 if (isset($tmp)) {

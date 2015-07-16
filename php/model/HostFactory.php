@@ -2,8 +2,15 @@
 
 include_once 'Host.php';
 include_once 'Database.php';
-
+/**
+ * Classe per la creazione degli host associati ai corsi
+ */
 class HostFactory {
+    /**
+     * 
+     * @param string $link il link di un corso
+     * @return \Host host associato al link in ingresso
+     */
     public static function getHostByLink($link) {
         $host = parse_url($link, PHP_URL_HOST);
         if (!$host ) {
@@ -28,6 +35,11 @@ class HostFactory {
         }
     }
     
+    /**
+     * 
+     * @param int $id
+     * @return \Host se esiste, l'host associato all'id in ingresso, NULL altrimenti
+     */
     public static function getHostById($id) {
         
         if (!isset($id)) {
@@ -45,6 +57,11 @@ class HostFactory {
         }
     }
     
+    /**
+     * restituisce un host a partire da una riga del db
+     * @param type $array
+     * @return \Host
+     */
     private static function getHostFromArray($array) {
         $host = new Host();
         
@@ -70,6 +87,11 @@ class HostFactory {
         return $host;
     }
     
+    /**
+     * 
+     * @param int $limit numero massimo di host da caricare
+     * @return un array contentente i primi $limit host nel database.
+     */
     public static function &getHosts($limit=null) {
         $hosts = array();
         $db = new Database();

@@ -29,7 +29,7 @@ if (!$vd->isJson()) {
                         require "$bar";
                     }
                     ?>
-                    <li><a class="navbar-item" href="">Info</a></li>
+                    <li><a class="navbar-item" href="info">Info</a></li>
                 </ul>
             </nav>
             <div id="page">

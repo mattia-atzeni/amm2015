@@ -3,12 +3,19 @@
 include_once 'Category.php';
 include_once 'Database.php';
 
+/**
+ * Classe per la creazione delle categorie
+ */
 class CategoryFactory {
     
     private function __construct() {
         
     }
     
+    /**
+     * 
+     * @return array delle categorie presenti nel db
+     */
     public static function &getCategories() {
             
         $categories = array();
@@ -26,7 +33,11 @@ class CategoryFactory {
     }
     
     
-    
+    /**
+     * Restituisce un oggetto Categoria da una riga del db
+     * @param type $array
+     * @return \Category
+     */
     private static function getCategoryFromArray(&$array) {   
         $category = new Category();
         $category->setId($array['id']);        
@@ -34,6 +45,11 @@ class CategoryFactory {
         return $category;
     }
     
+    /**
+     * 
+     * @param int $id id della categoria da cercare
+     * @return la categoria cercata se esite, NULL altrimenti
+     */
     public static function getCategoryById($id) {
         $query = "select id, name from categories
                   where id = ?";

@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Classe che rappresenta le categorie associate ai corsi
+ */
 
 class Category {
     private $id;

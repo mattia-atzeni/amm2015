@@ -6,13 +6,20 @@ include_once 'UserFactory.php';
 include_once 'CategoryFactory.php';
 include_once 'HostFactory.php';
 
-
+/**
+ * Classe per la creazione dei corsi
+ */
 class CourseFactory {
     
     private function __construct() {
         
     }
     
+    /**
+     * Resituisce un corso a partire da una riga del database
+     * @param type $array
+     * @return \Course
+     */
     private static function getCourseFromArray(&$array) {
         $course = new Course();
         $course->setId($array['id']);
@@ -25,6 +32,11 @@ class CourseFactory {
         return $course;
     }
     
+    /**
+     * Inserisce un corso nel db
+     * @param Course $course il corso da inserire
+     * @return boolean true se l'inserimento ha avuto successo, false altrimenti
+     */
     public static function saveCourse(Course $course) {
         $query = "insert into courses (name, link, category_id, owner_id, host_id)
                   values (?, ?, ?, ?, ?)";
@@ -44,6 +56,10 @@ class CourseFactory {
         return !$db->error();       
     }
     
+    /**
+     * @param id $owner_id id dell'utente che ha inserito i corsi cercati
+     * @return array dei corsi inseriti dall'utente con id $owner_id
+     */
     public static function &getCoursesByOwnerId($owner_id) {      
         $courses = array();
         $query = "select * from courses where owner_id = ?";
@@ -59,6 +75,10 @@ class CourseFactory {
         return $courses;
     }
     
+    /**
+     * 
+     * @return i corsi nel db
+     */
     public static function &getCourses() {
         $courses = array();
         $db = new Database();
@@ -74,6 +94,11 @@ class CourseFactory {
         return $courses;
     }
     
+    /**
+     * 
+     * @param int $id id del corso da cercare
+     * @return \Course il corso con id $id se esite, NULL altrimenti
+     */
     public static function getCourseById($id) {
         
         $row = Database::selectById("select * from courses where id = ?", $id);
@@ -84,7 +109,12 @@ class CourseFactory {
             return null;
         }
     }
-    
+    /**
+     * Gesitisce l'iscrizione dell'utente $user al corso $course
+     * @param User $user
+     * @param Course $course
+     * @return true se l'iscrizione ha avuto successo, false altrimenti
+     */
     public static function enroll(User $user, Course $course) {
         $query = "insert into courses_learners (learner_id, course_id) values (?, ?)";
         $db = new Database();
@@ -96,6 +126,12 @@ class CourseFactory {
         return !$db->error();
     }
     
+    /**
+     * 
+     * @param User $user
+     * @param Course $course
+     * @return true se $user è iscritto a $course, false altrimenti
+     */
     public static function isEnrolled(User $user, Course $course) {
         $query = "select * from courses_learners where learner_id = ? and course_id = ?";
         $db = new Database();
@@ -107,6 +143,12 @@ class CourseFactory {
         return isset($row);
     }
     
+    /**
+     * Permette all'utente $user di abbandonare il corso $course
+     * @param User $user
+     * @param Course $course
+     * @return true in caso di successo, false altrimenti
+     */
     public static function unenroll(User $user, Course $course) {
         $query = "delete from courses_learners where learner_id = ? and course_id = ?";
         $db = new Database();
@@ -118,6 +160,11 @@ class CourseFactory {
         return !$db->error();
     }
     
+    /**
+     * 
+     * @param int $id id di un utente
+     * @return array dei corsi a cui l'utente con id $id è iscritto
+     */
     public static function &getCoursesByLearnerId($id) {
         $courses = array();
         $query = "select courses.id, courses.name, courses.link, courses.category_id, courses.host_id, courses.owner_id "
@@ -138,6 +185,11 @@ class CourseFactory {
         return $courses;
     }
     
+    /**
+     * Rimuove un corso dal db
+     * @param int $id id del corso da rimuovere
+     * @return boolean true in caso di successo, false altrimenti
+     */
     public static function removeCourseById($id) {
         $db = new Database();
         $db->connect();
@@ -186,6 +238,13 @@ class CourseFactory {
         return $string;
     }
     
+    /**
+     * 
+     * @param string $name nome (o parte del nome) dei corsi da cercare
+     * @param $categories categorie a cui i corsi cercati possono appartenere
+     * @param $hosts host a cui i corsi associati possono appartenere
+     * @return array dei corsi che rispettano le condizioni specificate
+     */
     public static function &filter($name, &$categories, &$hosts) {
         $categoriesCondition = self::buildOrCondition(count($categories), "category_id");
         $hostsCondition = self::buildOrCondition(count($hosts), "host_id");

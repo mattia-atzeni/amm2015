@@ -1,5 +1,9 @@
 <?php
 
+
+/**
+ * Classe che rappresenta un generico utente
+ */
 class User {
     
     const Learner = '1';

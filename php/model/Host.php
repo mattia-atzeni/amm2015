@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * Classe che rappesenta gli host inseriti nel sistema
+ */
 class Host {
     private $id;
     private $name;
@@ -35,15 +37,8 @@ class Host {
         if (isset($valid)) {
             $this->link = $link;
             return true;
-        } else {
-            $temp = "http://" . $link;
-            $valid = filter_var($temp, FILTER_VALIDATE_URL, FILTER_NULL_ON_FAILURE);
-            if (isset($valid)) {
-                $this->link = $link;
-                return true;
-            }
-            return false;
         }
+        return false;
     }
 
 

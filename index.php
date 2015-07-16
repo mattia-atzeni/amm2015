@@ -7,15 +7,21 @@ include_once 'php/model/User.php';
 
 FrontController::dispatch();
 
+// Punto unico di accesso all'applicazione
 class FrontController {
     public static function dispatch() {
-        session_start();
+        session_start(); // inizializza la sessione
         $page = isset($_REQUEST['page']) ? $_REQUEST['page'] : "login";
         
+        // controlla la pagina richiesta e crea il controller appropriato
         switch ($page) {
             case "login":
                 $controller = new BaseController();
                 $controller->handleInput();
+                break;
+            case "info":
+                $controller = new BaseController();
+                $controller->showInfoPage();
                 break;
             case "learner":
                 $controller = new LearnerController();

@@ -388,3 +388,23 @@ footer p {
     padding: 0;
     margin: 0;
 }
+
+#info {
+    line-height: 1.25em;
+}
+
+#info .button {
+    margin-top: 64px;
+}
+
+#info p {
+    text-align: justify;
+}
+
+#info h1 {
+    margin-bottom: 32px;
+}
+
+#info strong {
+    line-height: 2em;
+}

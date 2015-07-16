@@ -1,13 +1,22 @@
 <?php
 include_once 'php/Settings.php';
 
+/**
+ * Classe per la gestione del database.
+ * In caso di errore la connessione viene terminata e 
+ * viene chiamata la funzione error_log per registrare l'errore. Il messaggio di errore registrato 
+ * contiene l'indicazione della classe e del metodo in cui l'errore si è verificato (ovvero il metodo che ha 
+ * a sua volta chiamato i metodi di questa classe).
+ * Ogni metodo, prima di eseguire le operazioni richieste verifica la presena di errori
+ */
 class Database {
     
     private $mysqli;
     private $stmt;
     private $error = true;
     private $executed = false;
-    private $stackCounter = 3;
+    private $stackCounter = 3;  // posizione nello stack del metodo che ha richiesto l'interazione con il database
+                                // al momento della registrazione del messaggio di errore
         
     public function connect() {
         $this->error = false;
@@ -21,6 +30,7 @@ class Database {
         return !$this->error;
     }
     
+    // inizializza il prepared statement
     public function prepare($query) {
         if (!$this->error ) {
             $this->stmt = $this->mysqli->stmt_init();
@@ -33,6 +43,7 @@ class Database {
         return !$this->error;
     }
     
+    // binding dei parametri in input
     public function bind() {
         if (!$this->error) {
             try {
@@ -67,7 +78,7 @@ class Database {
         return $result;
     }*/
 
-    
+    // esecuzione della query
     public function execute() {
         if (!$this->error) {
             if (!$this->stmt->execute()) {
@@ -78,6 +89,8 @@ class Database {
         return !$this->error;
     }
     
+    // fetch dei risultati
+    // restituisce null in caso di errore
     public function fetch() {
         
         $outputBind = false;
@@ -109,6 +122,7 @@ class Database {
         return null;
     }
     
+    // binding in output: viene creato un array associativo in cui le chiavi sono i nomi dei campi della tabella richiesti 
     private function outputBind(&$row) {
         $result = $this->stmt->result_metadata();
         if ($result) {
@@ -141,6 +155,7 @@ class Database {
         return $this->error;
     }
     
+    // gestione degli errori
     private function manageError($message) {
         $this->close();
         $this->error = true;
@@ -148,6 +163,7 @@ class Database {
         error_log("$header $message");
     }
     
+    // chiude la connessione
     public function close() {
         if (!$this->error) {
             if (isset($this->mysqli)) {
@@ -160,6 +176,8 @@ class Database {
         }
     }
     
+    // costruisce l'intestazione del messaggio di errore riportando nome della classe (se esiste) e metodo che hanno richiesto
+    // l'interazione con il database
     private function buildErrorMessageHeader() {
         $trace = debug_backtrace();
         $caller = $trace[$this->stackCounter];
@@ -181,6 +199,7 @@ class Database {
         return $this->stmt;
     }
     
+    // seleziona un elemento per id
     public static function selectById($query, $id) {
         $db = new Database();
         $db->stackCounter++;
@@ -189,7 +208,7 @@ class Database {
         $db->bind('i', $id);
         $row = $db->fetch();
         $db->close();
-        return $row;
+        return $row; // vale null in caso di errore
     }
 }
 

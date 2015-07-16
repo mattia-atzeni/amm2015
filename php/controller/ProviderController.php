@@ -18,8 +18,8 @@ class ProviderController extends BaseController {
 
             if (isset($_REQUEST['cmd'])) {
                 switch ($_REQUEST['cmd']) {
-                    case "save_course": $this->handleSaveCourseCmd(); break;
-                    case "remove":      $this->handleRemoveCmd(); break;
+                    case "save_course": $this->handleSaveCourseCmd(); break;    // comando per inserire un nuovo corso
+                    case "remove":      $this->handleRemoveCmd(); break;        // comando per rimuovere un corso
                 }
             }
                
@@ -33,6 +33,7 @@ class ProviderController extends BaseController {
         require "php/view/master.php";
     }
     
+    /* Gestisce la richesta di inserimento di un nuovo corso */
     private function handleSaveCourseCmd() {
         $course = $this->getCourse();
         if (isset($course)) {
@@ -42,6 +43,7 @@ class ProviderController extends BaseController {
         }
     }
     
+    /* Gstisce la richiesta di rimozione di un corso */
     private function handleRemoveCmd() {
         if (isset($_REQUEST['course_id'])) {
             $course_id = $_REQUEST['course_id'];
@@ -53,6 +55,10 @@ class ProviderController extends BaseController {
         $this->vd->addErrorMessage("Errore durante la rimozione del corso");
     }
     
+    /**
+     * Crea un corso a partire dai parametri forniti dall'utente
+     * @return \Course il corso creato in caso di successo, NULL altrimenti
+     */
     private function getCourse() {
         $course = new Course();
         $valid = array(
@@ -62,9 +68,12 @@ class ProviderController extends BaseController {
         );
         
         if ( isset($_REQUEST['name']) ) {
-           if ($course->setName($_REQUEST['name'])) {
-                $valid['name'] = true;
-           }
+            $name = trim($_REQUEST['name']);
+            if ($name != '') {
+                if ($course->setName(htmlentities($name))) {
+                     $valid['name'] = true;
+                }
+            }
         }
         
         if (isset($_REQUEST['link'])) {

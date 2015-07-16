@@ -4,7 +4,9 @@ include_once 'Host.php';
 include_once 'User.php';
 include_once 'Category.php';
 
-
+/**
+ * Classe che rappresenta un generico corso
+ */
 class Course {
     private $id;
     private $name;

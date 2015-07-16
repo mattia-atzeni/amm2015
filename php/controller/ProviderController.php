@@ -12,6 +12,7 @@ class ProviderController extends BaseController {
     }
     
     public function handleInput() {
+        $user = null;
         if ($this->loggedIn()) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
 
@@ -21,21 +22,22 @@ class ProviderController extends BaseController {
                     case "remove":      $this->handleRemoveCmd(); break;
                 }
             }
-
-            $this->preparePage();
-            $vd = $this->vd;   
+               
             $courses = CourseFactory::getCoursesByOwnerId($user->getId());
-            $hosts = HostFactory::getHosts(5);
             $categories = CategoryFactory::getCategories();
-            require "php/view/master.php";
         }
+        
+        $vd = $this->vd;
+        $hosts = HostFactory::getHosts(5);
+        $this->preparePage($user);
+        require "php/view/master.php";
     }
     
     private function handleSaveCourseCmd() {
         $course = $this->getCourse();
         if (isset($course)) {
             if (!CourseFactory::saveCourse($course)) {
-                $this->vd->addErrorMessage("dberror", "Impossibile salvare il corso");
+                $this->vd->addErrorMessage("Impossibile salvare il corso");
             }
         }
     }
@@ -48,7 +50,7 @@ class ProviderController extends BaseController {
             }
         }
         
-        $this->vd->addErrorMessage("remove", "Errore durante la rimozione del corso");
+        $this->vd->addErrorMessage("Errore durante la rimozione del corso");
     }
     
     private function getCourse() {
@@ -89,15 +91,15 @@ class ProviderController extends BaseController {
                     
         } else {
             if (!$valid['name']) {
-                $this->vd->addErrorMessage('name', 'Nome non valido');
+                $this->vd->addErrorMessage('Nome non valido');
             }
 
             if (!$valid['link']) {
-                $this->vd->addErrorMessage('link', 'Link non valido');
+                $this->vd->addErrorMessage('Link non valido');
             }
 
             if (!$valid['category']) {
-                $this->vd->addErrorMessage('category', 'Categoria non valida');
+                $this->vd->addErrorMessage('Categoria non valida');
             }
             
             return null;

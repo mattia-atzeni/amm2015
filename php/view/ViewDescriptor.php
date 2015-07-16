@@ -52,8 +52,8 @@ class ViewDescriptor {
         $this->title = $title;
     }
 
-    public function addErrorMessage($key, $value) {
-        $this->errorMessages[$key] = $value;
+    public function addErrorMessage($value) {
+        $this->errorMessages[] = $value;
     }
 
     public function setNavigationBar($navigationBar) {

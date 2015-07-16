@@ -7,7 +7,7 @@ html {
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Open Sans", Arial, sans-serif;
     background-color: #f0f0f0;
     padding: 0;
     margin: 0;
@@ -45,7 +45,7 @@ nav ul {
     background: #494949;
     width: 100%;
     z-index: 10;
-    min-width: 640px;
+    min-width: 800px;
     margin: 0;
     padding: 0;
     border-bottom: 1px solid #616161;
@@ -71,7 +71,7 @@ nav ul img {
     padding: 10px 30px 10px 30px;
     color: white;
     position: relative;
-    right: 64px;
+    right: 10%;
 }
 
 nav li a:hover {
@@ -115,33 +115,6 @@ nav li a:hover {
 .textbox:focus {
     box-shadow: 0px 0px 12px rgba(131, 255, 237, 0.7);
 }
-
-/*#login-form label, #login-form h2 {
-    color: #214454;
-    font-weight: bold;
-    text-shadow: 0px 0px 1px white;
-}*/
-
-/*#login-form button[type="submit"] {
-    background: linear-gradient(#52b1FF, #2276E3);
-    background: -webkit-linear-gradient(#52a1FF, #2276E3);
-    border-radius: 13px;
-    border: 1px solid #3087b2;
-    padding: 0.5em 1em 0.5em 1em;
-    color: white;
-}
-
-#login-form button[type="submit"]:hover {
-    background: linear-gradient(#72c1FF, #2296ff);
-    background: -webkit-linear-gradient(#72c1FF, #2296ff);
-    box-shadow: 0px 0px 2px rgba(131, 255, 237, 0.52);
-    color: white;
-}
-
-#login-form button[type="submit"]:active {
-    background: linear-gradient(#2296ff, #72c1FF);
-    background: -webkit-linear-gradient(#2296ff, #72c1FF);
-}*/
 
 #sidebar {
     height: 370px;
@@ -339,7 +312,7 @@ nav li a:hover {
 
 footer {
     text-align: center;
-    line-height: 2em;
+    line-height: 1.8em;
     background-color: #454545;
     border: 1px solid #454545;
     padding: 20px;
@@ -380,18 +353,38 @@ footer, #af {
     clear: both;
 }
 
-/*#title-logo h1 {
+#title-logo h1 {
     display: none;
 }
 
 #title-logo {
     position: absolute;
-    background-image: url(../images/mooc.png);
+    background-image: url(../images/mooc_dark.png);
     background-repeat: no-repeat;
-    background-size: 180px 40px;
-    width: 180px;
-    height: 40px;
-    top: 75px;
+    background-size: 300px 60px;
+    width: 300px;
+    height: 60px;
+    top: 12%;
     left: 50%;
-    margin-left: -90px;
-}*/
+    margin-left: -150px;
+}
+
+
+.validator a {
+    display: inline-block;
+    min-width: 128px;
+    padding: 0;
+    margin-top: 8px;
+    margin-left: 16px;
+    margin-right: 16px;
+    color: white;
+}
+
+.validator a:hover {
+    font-weight: bold;
+}
+
+footer p {
+    padding: 0;
+    margin: 0;
+}

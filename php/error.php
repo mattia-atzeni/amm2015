@@ -11,7 +11,7 @@
             $message
             ?>
             <br/><br/>
-            <a href="../login?cmd=logout">Login</a>
+            <a href=<?=Settings::getApplicationPath() . "login?cmd=logout"?>>Login</a>
         </p>
         
     </body>

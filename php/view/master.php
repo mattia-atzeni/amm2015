@@ -7,7 +7,7 @@ if (!$vd->isJson()) {
     <html>
         <head>
             <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-            <title><?php $vd->getTitle() ?></title>
+            <title><?= $vd->getTitle() ?></title>
             <base href="<?= Settings::getApplicationPath() ?>"/>
             <link rel="stylesheet"  type="text/css"  href="css/style.css">
             <?php
@@ -81,6 +81,14 @@ if (!$vd->isJson()) {
                     Progetto di Amministrazione di Sistema 2015<br/>
                     Autore: Mattia Atzeni - Matricola: 48958
                 </p>
+                <div class="validator">
+                    <p>
+                        <a href="http://validator.w3.org/check/referer" class="xhtml" title="Questa pagina contiene HTML valido" target="_blank">
+                            <abbr title="eXtensible HyperText Markup Language">HTML</abbr> Valido</a>
+                        <a href="http://jigsaw.w3.org/css-validator/check/referer" class="css" title="Questa pagina ha CSS validi" target="_blank">
+                            <abbr title="Cascading Style Sheets">CSS</abbr> Valido</a>
+                    </p>
+                </div>
             </footer>
             </div>
         </body>

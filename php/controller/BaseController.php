@@ -26,7 +26,7 @@ class BaseController {
                     $username = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
                     $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : '';
                     if ( !$this->login($username, $password) ) {
-                        $this->vd->addErrorMessage('login', "Utente sconosciuto o password errata");
+                        $this->vd->addErrorMessage("Utente sconosciuto o password errata");
                     }
                     break;
                 case "logout":
@@ -86,24 +86,27 @@ class BaseController {
     }
     
     protected function preparePage($user) {
+        $this->vd->setTitle("mooc");
+        $path = "php/view/";
         if (isset($user)) {
             switch ($user->getRole()) {
                 case User::Learner:
                     $this->vd->setPage("learner");
-                    $this->vd->setNavigationBar('php/view/learner/navigationBar.php');
-                    $this->vd->setContent('php/view/learner/content.php');
-                    return;
+                    break;
                 case User::Provider:
                     $this->vd->setPage("provider");
                     $this->vd->addScript("js/jquery-2.1.1.min.js");
                     $this->vd->addScript("js/new_course_form.js");
-                    $this->vd->setNavigationBar('php/view/provider/navigationBar.php');
-                    $this->vd->setContent('php/view/provider/content.php');
-                    return;
+                    break;
             }
         } else {
             $this->vd->setContent("php/view/login/content.php");
-        } 
+            return;
+        }
+        
+        $path .= $this->vd->getPage();
+        $this->vd->setContent($path . "/content.php");
+        $this->vd->setNavigationBar($path . "/navigationBar.php");
     }
     
     private function showPage($user) {

@@ -12,7 +12,8 @@ class LearnerController extends BaseController {
         parent::__construct();
     }
     
-    public function handleInput() {        
+    public function handleInput() {
+        $user = null;
         if ($this->loggedIn()) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
             
@@ -43,9 +44,9 @@ class LearnerController extends BaseController {
             }
         }
         
+        $this->preparePage($user);
         $hosts = HostFactory::getHosts(5);
         $vd = $this->vd;
-        $this->preparePage($user);
         require "php/view/master.php";
     }
     
@@ -57,13 +58,13 @@ class LearnerController extends BaseController {
                 if (CourseFactory::enroll($user, $course)) {
                     return;
                 } elseif (CourseFactory::isEnrolled($user, $course)) {
-                    $this->vd->addErrorMessage("enrollment", "Sei già iscritto a questo corso");
+                    $this->vd->addErrorMessage("Sei già iscritto a questo corso");
                     return;
                 }
             }
         }
         
-        $this->vd->addErrorMessage("enrollment", "Impossibile completare l'iscrizione al corso");
+        $this->vd->addErrorMessage("Impossibile completare l'iscrizione al corso");
     }
     
     private function handleUnerollCmd() {
@@ -77,7 +78,7 @@ class LearnerController extends BaseController {
             }
         }
         
-        $this->vd->addErrorMessage("uneroll", "Impossibile abbandonare il corso");
+        $this->vd->addErrorMessage("Impossibile abbandonare il corso");
     }
     
     private function &handleFilterCmd() {
@@ -95,7 +96,7 @@ class LearnerController extends BaseController {
                 if (isset($tmp)) {
                     $categories[] = $tmp;
                 } else {
-                    $this->vd->addErrorMessage("categories", "$category: categoria non valida");
+                    $this->vd->addErrorMessage("$category: categoria non valida");
                     break;
                 }
             }
@@ -108,7 +109,7 @@ class LearnerController extends BaseController {
                 if (isset($tmp)) {
                     $hosts[] = $tmp;
                 } else {
-                    $this->vd->addErrorMessage( "hosts", "$host: host non valido");
+                    $this->vd->addErrorMessage("$host: host non valido");
                     break;
                 }
             }

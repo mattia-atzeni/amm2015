@@ -1,3 +1,6 @@
+<?php if (count($vd->getErrorMessages()) == 0) {
+    ?><div id="title-logo"><h1>mooc</h1></div><?php
+}?>
 <form method="post" id="login-form" action="login">
     <h2>Login</h2>
     <label for="username">Username</label><br/>

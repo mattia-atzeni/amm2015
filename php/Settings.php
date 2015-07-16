@@ -10,7 +10,6 @@ class Settings {
 
     public static function getApplicationPath() {
         if (!isset(self::$applicationPath)) {
-            // restituisce il server corrente
             switch ($_SERVER['HTTP_HOST']) {
                 case 'localhost':
                     self::$applicationPath = 'http://' . $_SERVER['HTTP_HOST'] . '/mooc/';

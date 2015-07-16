@@ -90,7 +90,6 @@ if (!$vd->isJson()) {
                     </p>
                 </div>
             </footer>
-            </div>
         </body>
     </html>
     <?php

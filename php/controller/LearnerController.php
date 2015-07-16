@@ -16,17 +16,22 @@ class LearnerController extends BaseController {
         $user = null;
         if ($this->loggedIn()) {
             $user = UserFactory::getUserById($_SESSION[BaseController::User]);
+            $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
             
             if (isset($_REQUEST['cmd'])) {
                 switch ($_REQUEST['cmd']) {
-                    case "join":    $this->handleJoinCmd(); break;  //comando di iscrizione a un corso
-                    case "unenroll": $this->handleUnenrollCmd(); break;   // comando per abbandonare un corso 
-                    case "filter":  $courses = $this->handleFilterCmd(); break; // comando per cercare i corsi
+                    case "join":     
+                        $this->handleJoinCmd(); break;  //comando di iscrizione a un corso
+                    case "unenroll": 
+                        $this->handleUnenrollCmd(); break;   // comando per abbandonare un corso 
+                    case "filter":   
+                        if ( isset($subpage) && $subpage == "filter" ) {
+                            $courses = $this->handleFilterCmd(); // comando per cercare i corsi
+                        }
+                        break;
                         
                 }
             }
-            
-            $subpage = isset($_REQUEST['subpage']) ? $_REQUEST['subpage'] : "home";
 
             if (isset($subpage)) {
                 $this->vd->setSubpage($subpage);    // imposta la sottopagina corretta

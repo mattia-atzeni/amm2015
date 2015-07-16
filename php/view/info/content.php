@@ -31,7 +31,7 @@
         <li>Utilizzo del pattern MVC</li>
         <li>Due ruoli</li>
         <li>Transazione: metodo removeCourseById della classe CourseFactory</li>
-        <li>La funzionalità ajax è stata implementata per la ricerca dei corsi</li>
+        <li>La funzionalità AJAX è stata implementata per la ricerca dei corsi</li>
     </ul>
     <h2>Accesso al sistema</h2>
     <ul>

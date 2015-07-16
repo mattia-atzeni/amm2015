@@ -31,13 +31,14 @@ Ad ogni utente vengono associati:
 * Utilizzo del pattern MVC
 * Due ruoli
 * Transazione: metodo removeCourseById della classe CourseFactory
-* La funzionalità ajax è stata implementata per la ricerca dei corsi
+* La funzionalità AJAX è stata implementata per la ricerca dei corsi
 
 ## Accesso al sistema
 
-### Account Amministratore</strong>
+### Account Amministratore
 * Username: admin
 * Password: moocca
+
 ### Account Utente
 * Username: user
 * Password: moocca

@@ -93,7 +93,7 @@ class LearnerController extends BaseController {
     private function &handleFilterCmd() {
         
         if (isset($_REQUEST['name']) ) {
-            $name = $_REQUEST['name'];
+            $name = htmlentities($_REQUEST['name']);
         } else {
             $name = '';
         }
@@ -105,8 +105,8 @@ class LearnerController extends BaseController {
                 if (isset($tmp)) {
                     $categories[] = $tmp;
                 } else {
-                    $this->vd->addErrorMessage("$category: categoria non valida");
-                    break;
+                    $this->vd->addErrorMessage("categorie non valide");
+                    return array();
                 }
             }
         }
@@ -118,8 +118,8 @@ class LearnerController extends BaseController {
                 if (isset($tmp)) {
                     $hosts[] = $tmp;
                 } else {
-                    $this->vd->addErrorMessage("$host: host non valido");
-                    break;
+                    $this->vd->addErrorMessage("host non validi");
+                    return array();
                 }
             }
         }

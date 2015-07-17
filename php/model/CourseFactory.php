@@ -202,6 +202,8 @@ class CourseFactory {
         
         if ($db->error()) {
             // In caso di errore le modifiche al database vengono annullate
+            // I metodi della classe Database avrebbero rilevato l'errore comunque e la seconda query non
+            // sarebbe stata eseguita
             $db->getMysqli()->rollback();
             $db->close();
             return false;

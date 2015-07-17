@@ -7,7 +7,7 @@ include_once 'php/Settings.php';
  * viene chiamata la funzione error_log per registrare l'errore. Il messaggio di errore registrato 
  * contiene l'indicazione della classe e del metodo in cui l'errore si è verificato (ovvero il metodo che ha 
  * a sua volta chiamato i metodi di questa classe).
- * Ogni metodo, prima di eseguire le operazioni richieste verifica la presena di errori
+ * Ogni metodo, prima di eseguire le operazioni richieste verifica la presenza di errori
  */
 class Database {
     

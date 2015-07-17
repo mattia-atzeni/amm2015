@@ -193,17 +193,27 @@ class CourseFactory {
     public static function removeCourseById($id) {
         $db = new Database();
         $db->connect();
+        
+        // Il corso rimosso non sarà più accessibile agli utenti iscritti
         $db->prepare("delete from courses_learners where course_id = ?");
         $db->bind('i', $id);
-        $db->getMysqli()->autocommit(false);
+        $db->getMysqli()->autocommit(false); // inizio transazione
         $db->execute();
+        
+        if ($db->error()) {
+            // In caso di errore le modifiche al database vengono annullate
+            $db->getMysqli()->rollback();
+            $db->close();
+            return false;
+        }
+        
         $db->prepare("delete from courses where id = ?");
         $db->bind('i', $id);
         $db->execute();
         
         if (!$db->error()) {
             if ($db->getStmt()->affected_rows == 1) {
-                $db->getMysqli()->commit();
+                $db->getMysqli()->commit(); // rende definitive le modifiche
                 $db->getMysqli()->autocommit(true);
                 $db->close();
                 return true;

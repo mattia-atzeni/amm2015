@@ -22,7 +22,7 @@ class Database {
         $this->error = false;
         $this->mysqli = new mysqli();
         $this->mysqli->connect(Settings::$db_host, Settings::$db_user, Settings::$db_password, Settings::$db_name);
-        if ($this->mysqli->errno != 0) {
+        if ($this->mysqli->connect_errno != 0) {
             $header = $this->buildErrorMessageHeader();
             error_log("$header errore nella connessione al database - ($this->mysqli->connect_errno) : $this->mysqli->connect_error");
             $this->error = true;

@@ -50,8 +50,13 @@ class Database {
                 $args = func_get_args();
                 $stmtClass = new ReflectionClass('mysqli_stmt');
                 $method = $stmtClass->getMethod("bind_param");
-                if (!$method->invokeArgs($this->stmt, self::toReference($args))) {
+                /*if (!$method->invokeArgs($this->stmt, self::toReference($args))) {
                     throw new Exception();
+                }*/
+                if ( !call_user_func_array(array($this->stmt, "bind_param"), self::toReference($args)) ) {
+                    $header = $this->buildErrorMessageHeader();
+                    error_log("$header impossibile effettuare il binding in input");
+                    return false;
                 }
             } catch (Exception $e) {
                 $this->manageError("Impossibile effettuare il binding in input");

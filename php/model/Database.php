@@ -50,7 +50,9 @@ class Database {
                 $args = func_get_args();
                 $stmtClass = new ReflectionClass('mysqli_stmt');
                 $method = $stmtClass->getMethod("bind_param");
-                
+                //
+                //
+                //
                 if (!$method->invokeArgs($this->stmt, self::toReference($args))) {
                     throw new Exception();
                 }
